@@ -1,0 +1,143 @@
+1、@Autowired：可以对成员变量、方法和构造函数进行标注，来完成自动装配的工作。
+	：@Autowired标注可以放在成员变量上，也可以放在成员变量的set方法上。前者，Spring会直接将UserDao类型的唯一一个bean赋值给userDao这个成员变量；后者，Spring会调用setUserDao方法来将UserDao类型的唯一一个bean装配到userDao这个属性。
+
+2、spring能管理beans
+
+3、使用接口的目的是为了统一管理差不多的程序，方便其他程序调用。
+实现接口：接口中有写好的方法，不同的实现接口的方法，呈现出不同的结果。例如张三实现了接口那么会输出张三在工作，李四实现接口那么李四在工作。。等等 接口中包含多态的元素。
+
+4、public class Test {
+    public static void main(String[] args) {
+        ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml"); //通过获取上下文环境的配置xml，加载spring的bean
+        Javawork javawork=(Javawork) ac.getBean("javawork"); //根据配置好的beans.xml中id来声明一个新的对象。（Helloworld）强制转换
+        javawork.dotest(); //通过beans.xml /spring 等来实现依赖注入
+    }
+}
+
+5、专业解释:IOC（控制反转：InverseofControl ） ，又称作 依赖注入，是一种重要的面向对象编程的法则来削减计算机程序 的耦合问题，也是轻量级的 Spring 框架的核心。反向获得控制权。
+
+6、spring中依赖注入有:属性注入(通过get/set)获取数据
+					 :构造函数注入，有通过类型注入，也有索引注入，还有混合注入。索引要注意起始为0.  <constructor-arg type="int" value="1"></constructor-arg>
+					 :建造工厂注入。。。。。。。并不懂 (两种工厂静态和非静态的)
+					 :通过泛型注入。。。。整合hibnate和spring 更高级的说
+
+7、ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");//获得配置文件。
+
+8、注入大体归为:基本数据类型注入
+				:bean的内部注入，bean的连接注入
+				:集合类型的注入 (map,set,list) 其中set只能存储不同的数据，存储相同的数据，只显示一个
+				:null 值的注入等     <property><null>//中间为空</null></property>
+
+9、空指针异常:是指接受不到数据吧。大体这么理解吧
+
+10、spring中管理bean是单例模式，容器中只有一个吧就这样理解吧(晚上看看单例模式)
+
+11、通过配置 default-autowire 属性，Spring IOC 容器可以自动为程序注入 bean；默认是 no，不启用自动装配； default-autowire 的类型有 byName,byType,constructor
+： byName：通过名称进行自动匹配
+； byType：根据类型进行自动匹配
+； constructor：和 byType 类似，只不过它是根据构造方法注入而言的，根据类型，自动注入；
+
+12、bean之间的关系
+1、继承：那么就要先写父类，，那么父类就得要有相同的属性 。那么abstract为true是什么意思？？
+： <bean id="abstract" class="com.entity.Student" abstract="true">
+        <property name="age" value="19"></property>
+    </bean>
+    <bean id="zhangsan" parent="abstract" >  //子类在引用的时候把class换成parent。。。。翻译过来就是我继承的父类是id为abstract的bean
+        <property name="id" value="1"/>
+        <property name="name" value="12"/>
+    </bean>
+2、依赖：<bean id="zhangsan" parent="abstract" depends-on="level"> //depends-on 依赖于某个bean 
+3、引用：很简单不说了
+
+13、bean的作用范围
+1，singletonSpring ioc 容器中仅有一个 Bean 实例，Bean 以单例的方式存在； 
+2，prototype 每次从容器中调用 Bean 时，都返回一个新的实例； //暂时先掌握前面两个
+3，request 每次 HTTP 请求都会创建一个新的 Bean； 
+4，session 同一个 HTTPSession 共享一个 Bean； 
+5，globalsession 同一个全局 Session 共享一个 Bean，一般用于 Portlet 应用环境； 
+6，application 同一个 Application 共享一个 Bean；
+
+
+spring常用注解解释
+1、@controller 控制器（注入服务）
+2、@service 服务（注入dao）
+3、@repository dao（实现dao访问）
+4、@component （把普通pojo实例化到spring容器中，相当于配置文件中的<bean id="" class=""/>）
+  @Component,@Service,@Controller,@Repository注解的类，并把这些类纳入进spring容器中管理。 
+下面写这个是引入component的扫描组件 
+
+
+
+<context:component-scan base-package=”com.mmnc”>    
+component-scan标签默认情况下自动扫描指定路径下的包（含所有子包）
+
+其中base-package为需要扫描的包（含所有子包） 
+1、@Service用于标注业务层组件  处理请求所带来的业务逻辑
+2、@Controller用于标注控制层组件(如struts中的action)  相当于接受请求
+3、@Repository用于标注数据访问组件，即DAO组件.  标注与dao层 ，可以自动写入
+4、@Component泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注。
+
+
+注入方式
+
+把DAO实现类注入到action的service接口(注意不要是service的实现类)中，注入时不要new 这个注入的类，因为spring会自动注入，如果手动再new的话会出现错误，
+然后属性加上@Autowired后不需要getter()和setter()方法，Spring也会自动注入。
+在接口前面标上@Autowired注释使得接口可以被容器注入，如：
+
+当接口存在两个实现类的时候必须使用@Qualifier指定注入哪个实现类，否则可以省略，只写@Autowired。
+
+
+@Autowired注释:它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。 通过 @Autowired的使用来消除 set ，get方法。
+要使用@Autowired首先要在applicationContext.xml文件中配置。
+
+工作原理: 当spring容器启动的时候AutowiredAnnotationBeanPostProcessor将扫描spring容器中所有bean，当发现@Autowired的时候就找到和其匹配的bean，并注入到对应的地方上去。=> 依赖注入()
+
+spring 核心就是控制反转:(Inversion of Control loC) :重要的面向对象编程的法则，来削减计算机程序的耦合问题，也是spring轻量级的核心
+:分为两类{
+    :依赖注入:(Dependency Injection DI) :重点
+    :依赖查找:(Dependency Lookup DL) :重点
+}
+
+
+一般来说的话，在service层中写逻辑代码:涉及到事务的特性
+
+
+事务:实务是指对系统进行的一次操作，为了保证系统的完整性，事务需要具备四大特性
+事务四大特性(简称ACID) 
+1、原子性(Atomicity)：事务中的全部操作在数据库中是不可分割的，要么全部完成，要么均不执行。
+    => 实现事务的原子性，要支持回滚，即如果某个操作失败了，回滚到事务执行之前的状态，
+    => 大多数db在实现事务的时候，是在事务操作的数据快照上进行的，并不会修改实际的数据，如果有错不会提交，所以支持回滚。
+
+2、一致性(Consistency)：几个并行执行的事务，其执行结果必须与按某一顺序串行执行的结果相一致。
+    => 一致性是指事务从一个一致的状态转换到另一个一致的状态，事务的一致性决定了一个系统设计和实现的复杂性，事务有不同的程度的一致性
+        => 1、强一致性:读取操作可以立即读取到提交的更新操作。
+           2、弱一致性:提交的状态不一定能被立即读取到，所以存在一个误差，指的是读取到最新的数据需要一段时间
+           3、最终一致性:是弱一致性的一个特性，事务更新一份数据，在没有其他事务更新同样的值的话，最终所有的事务读取到的数据都是最新的。如果有错误发生，那么不一致的窗口大小取决于:通信延迟/系统负载等。
+           4、单调一致性:如果一个进程读取到一个值，那么后续的是不会读到更早的值的
+           5、会话一致性:保证客户端和服务器之间交互会话的过程中，读取操作可以读取更新操作后的最新值。
+
+3、隔离性(Isolation)：事务的执行不受其他事务的干扰，事务执行的中间结果对其他事务必须是透明的。
+    => 并发事务之间相互影响的程度，比如一个事务不会读取到另一个未提交的事务修改的数据。实务并发过程中，会出现
+        => 1、脏读:事务a修改一个数据，事务b读取到了事务a未提交的数据，然后事务a发生错误，事务b读取的就是脏数据
+           2、不可重复读:同一个事务中，对于同一份数据读取到是结果不一致，比如事务b读取事务a提交前的结果，和提交后读到的结果可能不同，不可重读出现的原因就是事务并发可能会修改记录，可以通过mvcc无锁的情况下，避免不可重复读。
+           3、幻读:同一次事务中，同一次查询返回的不同的查询结果，事务b在事务a提交数据前后各进行读取一次操作，发现两次查询的结果是不一致的。欢读是由于并发事务增加记录导致的，需要将事务串行化才能解决幻读
+        => 1、Read Uncommitted:最低隔离级别，什么都不需要，一个事务可以读取到另外一个事务未提交的结果，所有的并发事务的问题都有可能发生
+           2、Read Committed:只有在事务提交以后，起更新结果才会被其他事务所看见 => 可以解决脏读的问题。
+           3、Reparted Committed:在一个事务中对于同一份数据的查询结果总是相同的，无论其他事务是否对其进行数据操作，以及这个事务是否提交 => 可以解决脏，不可重复读的问题。
+           4、 Serialization：事务串行化执行，隔离级别最高，牺牲了系统的并发性。可以解决并发事务的所有问题。
+
+4、持久性(Durability)：对于任意已提交事务，系统必须保证该事务对数据库的改变不被丢失，即使数据库出现故障。
+
+    =>  事务提交后，对系统的影响是永久的
+
+
+    synchronized 单线程
+
+以上特性决定了，在涉及处理数据库的时候所有的sql要么一起完成，要么全部失败，如果有一个失败了，那么将不会对数据库造成任何改动。=> 保证了事务的完整性
+
+在service中用到注解:
+@Transactional(readOnly = false): 当为false的时候，可以对数据库进行update/delete/insert等
+@Transactional(readOnly = true):如果一旦用了这个，那么对数据库中只能进行读取操作
+
+
+

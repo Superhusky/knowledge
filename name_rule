@@ -1,0 +1,58 @@
+name_rule
+
+使用Array.aslist()将数组转化为list的时候，不能使用其修改集合的方法，因为aslist返回的是一个arrays一个内部类，并没有实现集合的修改方法，只是转化了接口，后台数据还是数组类型的。
+
+不要在foreach中使用remove和add操作，remove请使用iterator，并发操作的情况下，要进行锁操作
+iterator[String] it = a.iterator();
+while(it.hasNext()){
+	String s = it.next();
+	for(){
+		it.remove(s);
+	}
+}
+
+在初始化集合的时候最好是吧集合的长度设置好，：ArrayList 尽量使用 ArrayList(int initialCapacity) 初始化。 
+
+
+使用entrySet遍历map的kv值，而不是使用keySet遍历，
+keySet遍历map的时候是经历了两个步骤，第一步是遍历iterator，然后根据hashMap根据key取出相对应的value。entrySet是直接把key和value直接放到entry中然后进行遍历
+values()是返回一个v的list集合，entrySet是返回一个k-v的entry集合，keySet是返回一个k值的集合，是一个set对象。
+for (Map.Entry<Long, Integer> entry : testIdTotalMap.entrySet()) {
+	String key = entry.getKey();
+	String value = entry.getValue();
+}
+
+
+HashMap是kv都可以为null，且线程不安全，并且继承至AbstractMap
+TreeMap是k不能为null，但是value可以为null，继承至AbstractMap，线程不安全，
+Hashtable是kv都不能为null，线程安全，继承至Dictionary，
+ConcurrentHashMap，kv不能为null，且线程安全，继承于AbstractMap
+
+
+一个switch语句中，每个case通过break/return来终止，并且最后一定会有default，即使default中没有任何输出，且放在最后，
+
+if/ else / for/ while/ do 语句必须使用{}，即使里面没有任何类容，
+
+最好不要在if()判断语句中放置过长的语句，如果可以最好将语句的结果赋值给布尔类型，以提高可读性，
+
+循环语句考量性能，以下操作最好放到外面，定义对象，变量，获取数据库链接，
+
+
+数据库规约
+如果是表示是否这个概念的时候，字段命名最好以is_xxxx,数据类型是unsigned_tinyint,任何字段如果是非负数，必须是unsigned
+
+数据库字段命名，所有字段命名都以数字和英文字母，数字不能做开头，用下划线隔开，且下划线中间不能为纯数字，改数据库字段名字的话代价很大，所以慎重
+
+禁用保留字作为字段名字。
+
+唯一索引名:uk_
+普通索引名:idx_字段名
+
+小数类型decimal，禁止使用float和double
+
+varchar是可变长度的，不要预先分配空间，不要超过5000，超过的话请使用text,并且通过建立新表，一一对应的方式进行关联，避免影响其他字段的索引效率
+
+表名最好是加上“业务名称_表的作用”
+
+合适的字段存储长度，节约索引存储，提升检验速度，节约数据库表空间，
+人的寿命unsigned tinyint。

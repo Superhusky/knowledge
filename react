@@ -1,0 +1,244 @@
+ reactjs总结：
+1)获取属性的值用的是this.props.属性名
+
+2)创建的组件名称首字母必须大写。
+
+3)为元素添加css的class时，要用className。
+
+4)组件的style属性的设置方式也值得注意，要写成style={{width: this.state.witdh}}。
+
+5)JSX 允许直接在模板插入 JavaScript 变量。
+
+6)HTML 语言直接写在 JavaScript 语言之中，不加任何引号，这就是 JSX 的语法，它允许 HTML 与 JavaScript 的混写。
+
+7)getInitialState函数必须有返回值，可以是NULL或者一个对象。
+
+8)访问state的方法是this.state.属性名。
+
+9)变量用{}包裹，不需要再加双引号。
+
+10)ReactJs是基于组件化的开发，所以最终你的页面应该是由若干个小组件组成的大组件。
+
+11)为组件添加外部css样式时，类名应该写成className而不是class;添加内部样式时，应该是style={{opacity: this.state.opacity}}而不是style="opacity:{this.state.opacity};"。
+
+12)我们通过 this.props 来访问传入组件的数据，键名就是对应的命名属性，也可以通过 this.props.children 访问组件内嵌的任何元素。
+
+13)到目前为止，每一个组件都根据自己的 props 渲染了自己一次。 props 是不可变的：它们从父组件传递过来，“属于”父组件。为了实现交互，我们给组件引入了可变的 state 。this.state 是组件私有的，可以通过调用 this.setState() 来改变它。当 state 更新之后，组件就会重新渲染自己。//相当于改变自身的属性状态
+
+14)render() 方法依赖于 this.props 和 this.state ，框架会确保渲染出来的 UI 界面总是与输入（ this.props 和 this.state )保持一致。
+
+15)getInitialState() 在组件的生命周期中仅执行一次，用于设置组件的初始化 state 。
+
+16)当组件第一次创建的时候，我们想从服务器获取（使用 GET 方法)一些 JSON 数据来更新状态，以便展示最新的数据。我们将会使用 jQuery 发送一个异步请求到我们之前启动好的服务器，获取我们需要的数据。数据格式和相应代码看起来会是这个样子：
+
+17)为了使 UI 可交互，需要能够触发底层数据模型的变化。 React 通过 state 使这变得简单。
+
+18)构造出绝对最小的满足应用需要的最小 state 是有必要的，并且计算出其它强烈需要的东西。
+
+19)	React 组件非常简单。你可以认为它们就是简单的函数，接受 props 和 state (后面会讨论) 作为参数，然后渲染出 HTML
+
+20) React 组件只能渲染单个根节点。如果你想要返回多个节点，它们必须被包含在同一个节点里。///不是很理解啊
+
+21) 我们始终坚信，组件使用了正确方法去做关注分离。
+
+22) 你不需要为了 React 使用 JSX，可以直接使用纯粹的 JS。但我们更建议使用 JSX , 因为它能定义简洁且我们熟知的包含属性的树状结构语法。
+
+23) 由于 JSX 就是 JavaScript，一些标识符像 class 和 for 不建议作为 XML 属性名。作为替代，React DOM 使用 className 和 htmlFor 来做对应的属性。
+
+24) 要渲染 HTML 标签，只需在 JSX 里使用小写字母开头的标签名。 要渲染 React 组件，只需创建一个大写字母开头的本地变量。React 的 JSX 里约定分别使用首字母大、小写来区分本地组件的类和 HTML 标签。
+
+
+27) JSX 里添加注释很容易；它们只是 JS 表达式而已。你只需要在一个标签的子节点内(非最外层)小心地用 {} 包围要注释的部分。
+
+28) 这个 ... 操作符（也被叫做延展操作符 － spread operator)
+
+29) Autobinding:在 JavaScript 里创建回调的时候，为了保证 this 的正确性，一般都需要显式地绑定方法到它的实例上.有了 React，所有方法被自动绑定到了它的组件实例上
+
+30) 事件代理 ： React 实际并没有把事件处理器绑定到节点本身。当react启动的时候，它在最外层使用唯一一个事件监听器处理所有事件。当组件被加载和卸载时，只是在内部映射里添加或删除事件处理器。当事件触发，React 根据映射来决定如何分发。当映射里处理器时，会当作空操作处理。
+
+31) React 把用户界面当作简单状态机。把用户界面想像成拥有不同状态然后渲染这些状态，可以轻松让用户界面和数据保持一致。
+
+32) React 里，只需更新组件的 state，然后根据新的 state 重新渲染用户界面。
+
+33)复合组件 目前为止，我们已经学了如何用单个组件来展示数据和处理用户输入。下一步让我们来体验 React 最激动人心的特性之一：可组合性（composability)。
+
+34)具体来说就是能够通过开发简单的组件把程序的不同关注面分离。
+
+35) Avatar 拥有 ProfilePic 和 ProfileLink 的实例。拥有者 就是给其它组件设置 props 的那个组件。更正式地说， 如果组件 Y 在 render() 方法是创建了组件 X，那么 Y 就拥有 X。
+
+36) 校正就是每次 render 方法调用后 React 更新 DOM 的过程。
+
+37) 如果子级要在多个渲染阶段保持自己的特征和状态，在这种情况下，你可以通过给子级设置惟一标识的 key 来区分。return <li key={result.id}>{result.text}</li>;
+
+38) React 里，数据通过上面介绍过的 props 从拥有者流向归属者。这就是高效的单向数据绑定(one-way data binding) 拥有者通过它的 props 或 state 计算出一些值，并把这些值绑定到它们拥有的组件的 props 上。因为这个过程会递归地调用，所以数据变化会自动在所有被使用的地方自动反映出来。
+
+39) 组件不能修改自身的 props - 它们总是与它们拥有者设置的保持一致。
+
+40) 设计接口的时候，把通用的设计元素（按钮，表单框，布局组件等)拆成接口良好定义的可复用的组件。
+
+41) 随着应用不断变大，保证组件被正确使用变得非常有用。为此我们引入 propTypes。React.PropTypes 提供很多验证器 (validator) 来验证传入数据的有效性。(只在开发过程中使用proptyepes)
+
+42) 当父级没有传入 props 时，getDefaultProps() 可以保证 this.props.value 有默认值，注意 getDefaultProps 的结果会被 缓存。
+
+43)React.PropTypes.element 可以限定只能有一个子级传入。有什么用？？
+var MyComponent = React.createClass({
+  propTypes: {
+    children: React.PropTypes.element.isRequired
+  },
+
+  render: function() {
+    return (
+      <div>
+        {this.props.children} // 有且仅有一个元素，否则会抛异常。
+      </div>
+    );
+  }
+
+});
+
+44)关于 mixin 值得一提的优点是，如果一个组件使用了多个 mixin，并且有多个 mixin 定义了同样的生命周期方法（如：多个 mixin 都需要在组件销毁时做资源清理操作)，所有这些生命周期方法都保证会被执行到。方法执行顺序是：首先按 mixin 引入顺序执行 mixin 里方法，最后执行组件内定义的方法。
+
+45)React 里有一个非常常用的模式就是对组件做一层抽象。组件对外公开一个简单的属性（Props)来实现功能，但内部细节可能有非常复杂的实现。
+
+46)bind() 方法为被选元素添加一个或多个事件处理程序，并规定事件发生时运行的函数。
+
+47)var FancyCheckbox = React.createClass({
+  render: function() {
+    var fancyClass = this.props.checked ? 'FancyChecked' : 'FancyUnchecked'; //后面这个是什么意思？
+    return (
+      <div className={fancyClass} onClick={this.props.onClick}>  //classname有什么用呢？
+        {this.props.children}
+      </div>
+    );
+  }
+});
+React.render(
+  <FancyCheckbox checked={true} onClick={console.log.bind(console)}>
+    Hello world!
+  </FancyCheckbox>,
+  document.body
+);
+
+48)有时把所有属性都传下去是不安全或啰嗦的。这时可以使用 解构赋值 中的剩余属性特性来把未知属性批量提取出来。
+var { checked, ...other } = this.props; //将获取到的属性赋值给checked
+
+49) 如果组件需要使用一个属性又要往下传递，可以直接使用 checked={checked} 再传一次。这样做比传整个 this.props 对象要好，因为更利于重构和语法检查。
+
+50)如果想给组件设置一个非空的初始值，可以使用 defaultValue。上面的代码渲染出来的元素和受限组件一样有一个初始值，但这个值用户可以改变并会反应到界面上。
+
+51)没有设置 value(或者设为 null) 的 <input> 组件是一个不受限组件。同样地， 类型为 radio、checkbox 的<input> 支持 defaultChecked 属性， <select> 支持 defaultValue 属性。
+
+52)为什要使用受限组件的原因是与: HTML 不同，React 组件必须在任何时间点描绘视图的状态，而不仅仅是在初始化时。比如在 React 中：
+render: function() {
+    return <input type="text" name="title" value="Untitled" />;
+  }
+该方法在任何时间点渲染组件以后，输入框的值就应该始终为 Untitled。
+
+53)React是很快的，因为它从不直接操作DOM。React在内存中维护一个快速响应的DOM描述。render（)的方法返回一个DOM的描述，React能够利用内存中的描述来快速地计算出差异，然后更新浏览器中的DOM。
+
+54)React确保所有事件对象都符合W3C规范，并且持续冒泡，用一种高性能的方式跨浏览器
+
+55)组件的生命周期包含三个主要部分：
+
+挂载： 组件被插入到DOM中。
+更新： 组件被重新渲染，查明DOM是否应该刷新。
+移除： 组件从DOM中移除。
+我们提供will方法，会在某些行为发生之前调用，和did方法，会在某些行为发生之后调用。
+
+56)挂载
+getInitialState(): object在组件被挂载之前调用。状态化的组件应该实现这个方法，返回初始的state数据。
+componentWillMount()在挂载发生之前立即被调用。
+componentDidMount()在挂载结束之后马上被调用。需要DOM节点的初始化操作应该放在这里。
+更新
+componentWillReceiveProps(object nextProps)当一个挂载的组件接收到新的props的时候被调用。该方法应该用于比较this.props和nextProps，然后使用this.setState()来改变state。
+shouldComponentUpdate(object nextProps, object nextState): boolean当组件做出是否要更新DOM的决定的时候被调用。实现该函数，优化this.props和nextProps，以及this.state和nextState的比较，如果不需要React更新DOM，则返回false。
+componentWillUpdate(object nextProps, object nextState)在更新发生之前被调用。你可以在这里调用this.setState()。
+componentDidUpdate(object prevProps, object prevState)在更新发生之后调用。
+移除
+componentWillUnmount()在组件移除和销毁之前被调用。清理工作应该放在这里。
+挂载的方法（Mounted Methods)
+挂载的复合组件也支持如下方法：
+
+findDOMNode(): DOMElement可以在任何挂载的组件上面调用，用于获取一个指向它的渲染DOM节点的引用。
+forceUpdate()当你知道一些很深的组件state已经改变了的时候，可以在该组件上面调用，而不是使用this.setState()。
+
+57)挂载的方法（Mounted Methods)
+挂载的复合组件也支持如下方法：
+
+findDOMNode(): DOMElement可以在任何挂载的组件上面调用，用于获取一个指向它的渲染DOM节点的引用。
+forceUpdate()当你知道一些很深的组件state已经改变了的时候，可以在该组件上面调用，而不是使用this.setState()。
+
+58)记住，从 render() 中返回的内容并不是实际渲染出来的子组件实例。从 render() 返回的仅仅是子组件层级树实例在特定时间的一个描述。
+
+59)findDOMNode()仅在挂载的组件上有效（也就是说，组件已经被放进了DOM中)
+
+60)为了获取一个到React组件的引用，你可以使用this来得到当前的React组件，或者你可以使用refs来指向一个你拥有的组件
+
+61)在 JSX 中， <MyComponent /> 是合法的，而 <MyComponent> 就不合法。 所有的标签都必须闭合，可以是自闭和的形式，也可以是常规的闭合。
+所有 React component 都可以采用自闭和的形式：<div />. <div></div> 它们是等价的。
+
+62)目前， 一个 component 的 render，只能返回一个节点。如果你需要返回一堆 div ， 那你必须将你的组件用 一个div 或 span 或任何其他的组件包裹。
+切记，JSX 会被编译成常规的 JS； 因此返回两个函数也就没什么意义了，同样地，千万不要在三元操作符中放入超过一个子节点。
+React.render(<div id={condition ? 'msg' : ''}>Hello World!</div>, mountNode);
+
+63)当为内联样式指定一个像素值得时候， React 会在你的数字后面自动加上 "px" , 所以下面这样的写法是有效的：
+			var divStyle = {height: 10}; // rendered as "height:10px"
+有时候你的确需要保持你的CSS属性的独立性。下面是不会自动加 "px" 后缀的 css 属性列表：
+columnCount
+fillOpacity
+flex
+flexGrow
+flexShrink
+fontWeight
+lineClamp
+lineHeight
+opacity
+order
+orphans
+strokeOpacity
+widows
+zIndex
+zoom
+
+64)React.render(<input value="hi" />, mountNode);
+
+setTimeout(function() {
+  React.render(<input value={null} />, mountNode);
+}, 1000); 为什么后面都加个mountNode
+
+65)请尽量在使用的时候计算值，以此来确保不会出现同步延迟的问题和状态保持的问题
+
+66)使用 props, 自父级向下级传递，在使用 getInitialState 生成 state 的时候，经常会导致重复的"来源信任"，i.e. 如果有可能，请尽量在使用的时候计算值，以此来确保不会出现同步延迟的问题和状态保持的问题。
+
+67)node.js下的框架中的五个部分：action:动作，component:组件，entry:入口,reducer:解压？？有什么用？，store:存储
+
+68)state就是数据，组件就是数据的呈现形式，action是动作，action是通过reducer来更新state的。
+
+
+react中文文档总结:
+1、拆分用户界面为一个组件树:如何生成组件树=>理想状态下一个组件只做一件事，假如它的功能逐渐变大就需要被拆分成更小的组件
+
+2、state仅用于实现交换功能，也就是说，数据随着时间而变化，
+
+3、react是单向数据流，保持一切东西的模块化，很容易查错
+
+4、我服react我并不会
+
+5、原生
+的html元素以小写字母开头，自定义的React的类以大写字母开头
+
+6、我们通过 JavaScript 对象传递一些方法到 React.createClass() 来创建一个新的 React 组件。其中最重要的方法是 render ，该方法返回一棵 React 组件树，这棵树最终将会渲染成 HTML 。
+
+7、ReactDOM.render() 实例化根组件，启动框架，把标记注入到第二个参数指定的原生的 DOM 元素中。
+
+8、html组件就是普通的React组件，和定义的组件一样，只不过jsx编译器会自动重写html语句。
+
+9、从父组件传入数据会作为子组件的属性(property),这些子属性会通过this.props来访问到，然后渲染一些标记。
+    我们通过this.props来访问传入过来的数据，键名就是对应的属性名称，用this.props.children来访问组件内任何嵌套的元素。
+
+10、响应状态的变化，每一个组件都通过props来渲染自己一次，props是不可变的，它们是通过父组件传过来的数据。为了可变我们引入了可变的
+state，this.state是属于组件的，他们是可变的。可以通过this.setState来改变它，当state改变的时候，组件就会重新渲染自己。
+
+11、render依赖state，props，框架会确保自己的渲染出来的ui界面总是和输入的this.props/this.state保持一致。
+    getInitialState() 在组件的生命周期中仅执行一次，用于设置组件的初始化 state 。
+12、

@@ -1,0 +1,142 @@
+aop 总结
+
+1、aop基本概念:
+	Joinpoint:程序执行时某个特定的点，在spring就是某一个方法的执行
+	Pointcut:spring中aop的切点就是一些方法的集合，这些方法是需要加强的，被代理的，一般是按照一定的约束规则来表示的
+	advice:指切点上面要干什么的,dobefore,doafter等
+	advisor:切点和通知的结合
+
+2、通过xml来配置aop
+	配置文件中的pointcut，在java中用编写实际的acpect类，针对切入点进行业务的相关处理
+	xml文件的配置
+		:<bean id="userManager" class="com.dkp.service.test.UserManagerServiceImpl">
+		    <property name="name" value="lixiaoxi"></property>
+		 </bean>
+
+	  <bean id="aspectBean" class="com.dkp.aop.AopAspect" />
+
+	  <aop:config>
+	    <aop:aspect ref="aspectBean">
+	      <aop:pointcut id="pointcut" expression="execution(* com.dkp.service.test.UserManagerServiceImpl..*(..))"/>
+
+
+	      下面的方法都是定义前后环绕等触发切点
+	      <aop:before method="doBefore" pointcut-ref="pointcut"/>
+	      <aop:after-returning method="doAfterReturning" pointcut-ref="pointcut" returning="result"/>
+	      <aop:after method="doAfter" pointcut-ref="pointcut" />
+	      <aop:around method="doAround" pointcut-ref="pointcut"/>
+	      <aop:after-throwing method="doAfterThrowing" pointcut-ref="pointcut" throwing="ex"/>
+	    </aop:aspect>
+	  </aop:config>
+
+	  详情见idea dkp 项目
+
+3、当使用配置好的aop方法的时候，相当于是把这个方法加上 dobfore,doafter等
+
+4、aop的实现原理分为静态aop和动态aop,静态aop是把切面代码直接编译到class类文件中,动态aop是指将切面代码动态织入实现的aop
+	动态的aop实现的技术为jdk提供的动态的代理技术和CGLIB(动态字节码增强技术),都是基于代理模式,都是生成代理对象
+
+
+shiro 总结
+1、shiro基础知识(登录授权部分)
+	1、现在web.xml文件中配置 引入shrio.xml文件,
+		<context-param>
+	    <param-name>contextConfigLocation</param-name>  全局的本地文件
+	    <param-value>
+	      classpath*:/applicationContext.xml
+	      classpath*:/applicationContext-shiro.xml
+	    </param-value>
+	  </context-param>
+	
+	2、shiro是拦截器的进化版,所以配置所有请求都要经过shiro
+	 	键值对的形式找到
+		 <filter>
+		    <filter-name>shiroFilter</filter-name>
+		    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		    <init-param>
+		      <param-name>targetFilterLifecycle</param-name>
+		      <param-value>true</param-value>
+		    </init-param>
+		 </filter>
+
+		 <filter-mapping>
+		    <filter-name>shiroFilter</filter-name>  //shiroFilter其实 是在 applicattion-shiro.xml文件中某一个bean对应的
+		    <url-pattern>/*</url-pattern>
+		 </filter-mapping>
+
+	3、shrio最主要的配置
+
+		<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	        <!--Shiro的核心安全接口,这个属性是必须的-->
+	        <property name="securityManager" ref="securityManager"/> //最核心的部分
+	        <property name="loginUrl" value="/login"/> //配置系统的登陆请求地址
+	        <property name="successUrl" value="/"/> //当登陆成功以后系统跳转的请求
+	        <property name="unauthorizedUrl" value="/index"/> //拦击不知名的请求并跳到 /index 这个请求上面
+	        <property name="filters"> // 配置拦截器
+	            <map>
+	                <entry key="authc" value-ref="formAuthenticationFilter"/> // k - v 键值对找到 相对应的拦截请求方法
+	                <entry key="authUser" value-ref="authFilter"/> // 同上 
+	            </map>
+	        </property>
+	        <property name="filterChainDefinitions">
+	            <value>
+	                /index = anon // anon 表示这个请求不需要验证
+	                /favicon.ico = anon
+	                /static*/** = anon
+	                /login = authc  //authc 1、表示需要验证，如果没有自定义的话 2、因为这边重写了authc对应的方法效果差不多
+	                /logout = logout
+	                /servlet/validateCodeServlet = anon
+	                /** = authUser // 有顺序问题,如果这个请求放在最上面,那么所有请求的都会走 authUser 所对应的方法,其他方法即使配置了也不起效果
+	            </value>
+	        </property>
+	    </bean>
+
+	    //对应上面的 ref = "securityManager" 这个是为了配置shrio的安全数据域
+	    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        	<property name="realm" ref="monitorRealm"/>   // 找到 service = monitorRealm 的service 类通过bean
+    	</bean>
+
+
+    4、 shiro中主体之一
+    	UsernamePasswordToken token = (UsernamePasswordToken) authToken; //被称为安全令牌
+        Session session = SecurityUtils.getSubject().getSession(); // 获取session,为什么会得到session 不是很清楚哎
+        String code = (String) session.getAttribute(ValidateCodeServlet.VALIDATE_CODE); // 得到session中name=“VALIDATE_CODE”的对应的值
+
+    5、SecurityUtils.getSubject().isAuthenticated();获取该用户是否已经登陆
+
+    6、subject.getPrincipal();返回一个principal对象,该对象包含当前授权用户的名称,没有通过认证的就没有返回值
+
+    7、shiro的概念总结摘抄自网上
+    	1、subject : shiro主体部分外部应用与subject进行交互,subject记录当前操作的用户,该用户可能是通过浏览器请求的用户,也可能是一个运行的客户端
+    	Subject是shiro中的一个接口,外部程序通过subject来进行认证和安全授权,subject通过securityManager来进行搜全和安全认证
+    	2、SecurityManager : 是shiro的核心,管理所有的Subject.SecutityManager继承 SessionManager,Authorizer和Authenticator.通过Authenticator来进行认证,通过Authorizer来进行授权,通过SessionManager来进行会话管理
+    	3、Authenticator : 即认证器，对用户身份进行认证，Authenticator是一个接口，shiro提供ModularRealmAuthenticator现类，通过ModularRealmAuthenticator基本上可以满足大多数需求，也可以自定义认证器。
+		4、Authorizer : 授权器，用户通过认证器认证通过，在访问功能时需要通过授权器判断用户是否有此功能的操作权限。
+		5、realm : Realm即领域，相当于datasource数据源，securityManager进行安全认证需要通过Realm获取用户权限数据，比如：如果用户身份数据在数据库那么realm就需要从数据库获取用户身份信息。 换句话说就是将获取到的数据与数据库中保存的数据进行对比,符合条件的那么就直接登陆,不符合条件的直接over
+		注意：不要把realm理解成只是从数据源取数据，在realm中还有认证授权校验的相关的代码
+		6、sessionManager : 会话管理,不依赖于web的session.
+		7、CacheManager : 缓存管理,用户权限数据存储于缓存当中
+
+	8、shiro过滤器,shiro验证url以后,验证成功以后就不会匹配查找,故filterChainDefinitions 的配置顺序是自上而下的,以最上面的为准,当一个web程序启动的时候,shiro会自动创建一些filter实例,
+	user 和 authc的区别就是 user是表示已经登录过的,且被系统记住的用户,再一次登录的时候不走authc这个验证方法,虽然我也不知道为什么
+		常见的filter的配置名称
+		各默认过滤器常用如下(注意URL Pattern里用到的是两颗星,这样才能实现任意层次的全匹配)
+		/admins/**=anon             无参,表示可匿名使用,可以理解为匿名用户或游客
+		/admins/user/**=authc       无参,表示需认证才能使用
+		/admins/user/**=authcBasic  无参,表示httpBasic认证
+		/admins/user/**=user        无参,表示必须存在用户,当登入操作时不做检查
+		/admins/user/**=ssl         无参,表示安全的URL请求,协议为https
+
+		参数可写多个,多参时必须加上引号,且参数之间用逗号分割,如/admins/user/**=perms["user:add:*,user:modify:*"]
+		当有多个参数时必须每个参数都通过才算通过
+
+临时总结
+1、这个就是this的用法,this指的是当前这个类中的变量
+	this.rememberMe = false;
+	this.rememberMe = rememberMe;
+
+2、http如何发送接受请求的
+
+3、所有的枚举都继承自java.lang.Enum类。由于Java 不支持多继承，所以枚举对象不能再继承其他类。
+
+

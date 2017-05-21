@@ -1,0 +1,74 @@
+1、声明一个list集合：private static List<Student> studentlist=new ArrayList<Student>();
+	static{}中可以放一些只会使用一次的东西
+	studentlist.add(new Student());
+  这个其实就是缓存啊
+
+3、public ModelAndView preSave(@RequestParam(value = "id",required = false) String id ){ //记住@Requestparam的写法 required 常常为true 带参数的说
+		required：这个是传参当他为false时使用这个注解可以不传这个参数，true时必须传
+		required：默认值是true 记住哈
+
+4、springmvc对json是怎么处理的？？？公司项目？是自己写底层吗？还有idea中怎么样才能让tomcat不用重启就能刷新修改过的代码
+
+5、RESTful:一种软件架构风格，设计风格而不是标准，只是提供了一组设计原则和约束条件。它主要用于客户端和服务器交互类的软件。基于这个风格设计的软件可以更简洁，更有层次，更易于实现缓存等机制。
+
+	RESTful的关键是定义可表示流程元素/资源的对象。在REST中，每一个对象都是通过URL来表示的，对象用户负责将状态信息打包进每一条消息内，以便对象的处理总是无状态的。
+	
+	RESTful的第二大问题是组合管理及流程绑定。企业对正规的（基于SOAP）SOA最大的反对声之一便是，这种等级的发现和绑定灵活性不足以适应复杂性
+
+	难点
+
+6、在写Controller时，根据不同的@RequestMapping("/")请求，调用不同的处理类
+   @RequestParam：public ModelAndView preSave(@RequestParam(value = "id",required = false) String id ){ //记住@Requestparam的写法 required 常常为true。传入一个参数。。。
+
+ 7、6月19号总结加疑问
+ 	: private static List<Student> studentlist=new ArrrayList<Student>();声明一个Student的ArrayList<>集合
+ 	: static可以只执行一次
+ 	: mav.addObject("studentlist",studentlist); //mav中添加抽象对象 ModelAndView中的方法，可以添加对象
+ 	: mav.setViewName("student/list");//将视图返回到stuent中的list.jsp中
+    : Student s=studentlist.get(student.getId()-1);//将list集合中下标相同的student找出来,list集合下标都是以0开始所以查找的时候要减1切记
+    : s.setName(student.getName()); //然后将修改的student的name和age赋值给s
+    : return "redirect:/student/list.do";返回重定向，重新请求/student/list
+    : list集合中常用的几个操作：remove(移除)，get(根据下标找到对应的数据)等
+    : <%response.sendRedirect("student/list.do");%>  直接重定向，请求为student/list
+    : ${pageContext.request.contextPath}绝对地址记住就行，
+    : <form action="${pageContext.request.contextPath}/student/save.do" method="post">  //form表单请求
+      <form action="user/login.do" method="post">     //没有绝对地址的时候那么user之前就不用加"/";
+    : <a href="${pageContext.request.contextPath}/student/preSave.do?id=${student.id}">修改</a>   //重点是后面的id=${student.id}
+      将student的id属性带过去以方便Controller能够知道到底处理那个编号下的数据(自我理解);   同时在Controller中要有相应的@RuquestParam (和第六条相对应)
+    : css中的基本用法已经忘的差不多了(回头得要补补)。最基本的三种选择器回家看看。。。。。。。。。。。。。。。。。
+    : <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources2/css.css"/> 在页面中引入其他位置的css文件。
+    ；restful的基本用法：
+
+8、springmvc中的常用注解解释
+	: @RequestMapping :注解为控制器指定可以处理哪些URL请求
+  ：@RequestParam :在处理方法入参处使用@RequestParam可以把请求参数传递给请求方法
+  : @RequestBody :该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析
+  ，然后把相应的数据绑定到要返回的对象上 ，再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。
+  : @ResponseBody :该注解用于将Controlller的方法返回的对象，通过适当的HttpMessageConverter转换指定格式后，写入到Response对象的body数据区
+  ：@ModelAttribute :在方法定义上使用@ModelAttribute注解:Springmvc在调用目标处理方法前，会逐先调用在方法级上标注了@ModelAttribute
+  的方法
+
+9、SpringMVC运行原理
+  :客户端请求提交到DispatcherServlet
+  :由DispatcherServlet控制器查询一个或多个HandlerMapping，找到处理请求的Controller 
+  :DispatcherServlet将请求提交到Controller； Controller调用业务逻辑处理后，返回ModelAndView
+  :DispatcherServlet查询一个或多个ViewResoler视图解析器，找到ModelAndView指定的视图
+  :视图负责将结果显示到客户端
+
+10、SpringMVC和struts2的区别
+  :springmvc基于方法开发的，struts2基于类开发的。springmvc将url和controller里的方法映射。映射成功后springmvc生成一个Handler对象，对象中只包括了一个method。方法执行结束，形参数据销毁。springmvc的controller开发类似web service开发。
+  :Springmvc可以进行单例开发，并且建议使用单例开发，struts2通过类的成员变量接收参数，无法使用单例，只能使用多例。
+    =>单例模式注意下
+
+11、@ResponseBody的作用就是将查询出来的结果塞到http请求当中，然后返回页面，由前段js来显示数据
+
+12、springMvc中常用的注解
+    一般来说一个模块用一个总的请求，然后对应不同的请求进行分割
+    @Controller:(告诉程序这部分是以什么请求开头的)
+
+    @RequestMapping:(大请求下的独立的小请求)
+    @RequestMapping(value = "/updateDetailException", method = RequestMethod.POST):可以通过method来设置请求为post/get
+
+    @RequestParam:请求的入参格式反正要写就是了,可以设置true/flase来设定入参是否可以为空。    
+
+

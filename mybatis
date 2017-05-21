@@ -1,0 +1,170 @@
+MyBatis是支持普通SQL查询，存储过程和高级映射的优秀持久层框架。
+
+MyBatis消除了几乎所有的JDBC代码和参数的手工设置以及结果集的检索。MyBatis使用简单的XML或注解用于配置和原始映射，将接口和Java的POJOs（Plan Old Java Objects，普通的Java对象）映射成数据库中的记录。
+1）		 API接口层：提供给外部使用的接口API，开发人员通过这些本地API来操纵数据库。接口层一接收到调用请求就会调用数据处理层来完成具体的数据处理。
+
+2)       数据处理层：负责具体的SQL查找、SQL解析、SQL执行和执行结果映射处理等。它主要的目的是根据调用的请求完成一次数据库操作。
+
+3)       基础支撑层：负责最基础的功能支撑，包括连接管理、事务管理、配置加载和缓存处理，这些都是共用的东西，将他们抽取出来作为最基础的组件。为上层的数据处理层提供最基础的支撑。、
+
+mybatis-config.xml中配置
+1、environments 中可以配置多个开发环境。有开发环境development、text等环境适合软件不同的开发过程。
+
+2、transactionManager  mybatis支持两种事物管理器 jdbc和MANAGED 常用的是JDBC
+
+3、dataSource 用来配置数据源分为三种：UNPOOLED没有连接池，每次创建新的连接，用完后销毁关闭。适合小并发项目。POOLED配置连接池(常用)
+
+4、properties 配置属性  单独配置属性<property value="com.mysql.jdbc.Driver" name="jdbc.driverClassName"></property>
+						独立写一个文件包含这些属性 <properties resource="jdbc.properties"/> 用这个来引用
+
+5、typeAliases 给用到的类取个别名 方便调用 <typeAlias alias="Student" type="com.mod el.Student"/>  但是如过要取得很多别名的时候
+										   <package name="com.model"></package> 用这个比较好。。。。。。
+
+6、mappers引入mapper映射这边的。和上面一样在xml配置的时候：<package name="com.mapper"></package>
+
+7、<resultMap type="Student" id="StudentResult">
+		<id property="id" column="id"/> //作为主键唯一标识，所以要用id
+		<result property="name" column="name"/> //两个双引号之间的name可以不一样吗？ property和colnum到底代表什么意思
+		<result property="age" column="age"/> //property中的name就是Student模型中的属性一样，
+	</resultMap>
+	<select id="find" resultMap="StudentResult">//返回的类型是StudentResult类型
+		select * from student;
+	</select>
+	数据库中各种语言中的select语句 涉及到list存储
+
+8、一对一的映射关系：用对象级联来处理column中要用到外键
+
+9、colunm是什么意思  <association property="address" column="addressId" select="com.mapper.AddressMapper.findById"/> 
+	通过传进来的id找到一个学生信息 然后根据学生信息中的addressid作为外键找到 address表中的相应的数据         
+	colunm 一定要带的是外键                     
+	colunm 对应student中的外键 address 中的id
+	//通过student中的外键addressid来找到对应的address。。。。。。。。。。。。。。。。。。。。。外键找表一对一的关系
+
+10、<collection property="students" column="id" select="com.mapper.StudentMapper.findbygradeid"></collection> 通过外键相连接你懂的
+	//通过grade表中的主键寻找到是这个年级的学生。。。。。。。。。。。。。。。。。。。。。。一对多。。。。。传过去的是主键一个年纪对应多个学生
+	//求问：多对多的关系映射怎么破解？？？？两个一个多？怎么表现？
+
+11、mybatis 杂项:clob 大文本类型 例如小说 这种字符多的
+				 blob 二进制的 图片，电影什么的。
+			File file=new File("d://123.png");  //将地址下的文件赋值给file对象
+			OutputStream outStream=new FileOutputStream(file); //将对象生成二进制流
+			outStream.write(pic);//写出二进制流 
+			outStream.close();//关闭
+			文件io流。。。。。。。记住格式吧  
+注：字节流是由字节组成的,字符流是由字符组成的. Java里字符由两个字节组成.字节流是最基本的,一个字符由两个字节组成
+程序中的输入输出都是以流的形式保存的，流中保存的实际上全都是字节文件。
+InputStream 和OutputStream,两个是为字节流设计的,主要用来处理字节或二进制对象,
+Reader和 Writer两个是为字符流（一个字符占两个字节）设计的,主要用来处理字符或字符串
+
+12、物理分页比较好 用map.......
+	：sql语句的写法：select * from student limit 3，3；         
+	//从第三个数据开始 往下写三个。。。。。。没有start 和size。。。这两个字段是用来放入map中的
+	
+	：声明一个map：Map<String,Object> map=new HashMap<String,Object>();     
+	当Object时可以这样添加数据：map.put("start",3);  但是当是Objects时那么就不能添加单个数据
+	
+	：在map.xml中用动态标签写sql语句：
+	 <select id="findbymap" parameterType="Map" resultMap="StudentResult">
+		select * from student
+		<if	test="start!=null and size!=null"> //用的是<if>标签不是if().......。。。。记住
+  		  limit #{start},#{size}
+		</if>
+	</select>
+	：在声明一个List集合：public List<Student> findbymap(Map<String,Object> map); // 调用findbymap返回的是List<>集合对象
+
+13、mybatis6月17日学习整理：整合了spring springmvc mybatis 三个框架 在其中基本熟悉了配置不过都是抄的。。。
+						  ：在service包中的userserviceimpl注入dao层时提示出现没有办法自动装配dao层。
+						  ：学习了怎么样使用idea建立web程序
+						  ：学习了在idea上如何配置tomcat
+						  ：在使用ssm架构时遇到的最大的问题就是bean的使用。(有空多看看这方面)
+						  ：在学习期间心有利而力不足增强自我学习能力
+						  ：学习期间对于一对多，多对一映射有点生疏
+						  ：主要将重点放在spring 和springmvc中
+						  ：等等。。。。。。
+
+14、<resultMap type="Address" id="AddressResult">
+		<result property="id" column="id"/>
+		<!--为什么不是<id property="id" colunm="id">-->//这两者到底有什么区别
+		<result property="sheng" column="sheng"/>
+		<result property="shi" column="shi"/>
+		<result property="qu" column="qu"/>
+	</resultMap>
+
+15、list：//实验证明，list保存的是p1 p2 指向的内存地址，这块内存地址的值可以通过p1 p2去修改里边的值  
+	      //但是改变p1 p2的指向并不能改变这块内存地址的值，所以当p1 = null时  
+          //list保存的p1所指向的内存地址还是不会改变，还是会有值 
+          //什么时候用list什么时候用map
+          //Hashmap和Hashtable有什么区别   分别何时用？
+List接口 继承collection接口，Map是个顶级接口
+List此接口的用户可以对列表中每个元素的插入位置进行精确地控制。
+用户可以根据元素的整数 索引（在列表中的位置）访问元素，并搜索列表中的元素
+map将键映射到值的对象。一个映射不能包含重复的键；每个键最多只能映射到一个值
+简单的说就是list只能保存一列表;Map<k,v>能保存2列表
+
+list嘛 比如你从数据库里读了很多条记录 经过处理封装成对象 就可以装在一个该对象类型的list里面 就可以迭代（foreach读取）访问里面每个对象，里面的对象是有顺序的，只有索引，你不能通过对他们取别的名字之类的得到她 ；
+map呢 是key-value组成的键值对；value可以是任意object；key是一个String；你可以通过key访问value；比如在servlet技术中 放在request里的东西 response 里的东西这些都是map；还有比如解析xml的时候 你读到的东西 也可以用map来保存
+
+16、sqlsession.commit()是用来作用最后的数据的，将结果存到数据库中的
+
+17、写like语句的时候 一般都会写成 like '% %'在mybatis里面写就是应该是 like  '%${name} %' 而不是 '%#{name} %'  ${name} 是不带单引号的，而#{name} 是带单引号的
+	=> eg: path like CONCAT('%',#{path},'%')
+
+18、mybatis中的foreach语句(动态sql)
+eg: <foreach collection="contents" item="item" index="index" separator="or" open="(" close=")">
+            ( serial = #{item.serial,jdbcType=TINYINT}
+            <if test="item.content!=null">
+                and content = #{item.content,jdbcType=VARCHAR}
+            </if>
+            )
+    </foreach>
+    collection:传过来的list/array大对象
+    item:集合中的元素,可以是一个单一的变量，也可以是一个对象
+    index:索引
+    separator:以什么分开("or",",")等 
+    open:一般以左括号开始
+    close:一般以右括号结尾
+
+19、<if test="item.content!=null">
+                and content = #{item.content,jdbcType=VARCHAR}
+    </if>
+    mybatis中的if条件判断语句(动态sql)
+    => 当item.content存在的时候下面的sql语句才执行
+
+20、select group_concat(paper_id) from fire_work_detail where test_id = 944;
+    => group_concat(paper_id):将查询出来的结果多行合并成一个以","隔开的字符串
+
+21、select
+        <include refid="Base_Column_List" />
+    from
+    Base_Column_List:将要查询的字段封装，便于使用。
+
+22、where anscard_id = #{ansCardId,jdbcType=VARCHAR}:格式
+
+23、mybatis中#和$的区别
+1、#能有效防止注入，预处理
+
+2、$方式一般都会传入数据库对象，例如表名
+
+3、#符号会将传入的数据都当作字符串，会自动添加"" 
+
+4、$符号会将传入的数据直接显示在sql语句中，如果传入的是id => select * from user_info where order by id 
+
+
+少用$ 
+使用 order by 动态参数的时候用$ 
+
+
+ #{}通常情况下会使mybatis创建预处理语句属性并以他的背景设置安全的值，
+
+
+如果在sql中插入一个不想改变的字符串
+order by $(ada)
+这里的话mybatis不会修改或转义字符串
+
+
+24、mybatis中的like语句 SELECT  
+*  
+FROM  
+user  
+WHERE  
+name like CONCAT('%',#{name},'%')  

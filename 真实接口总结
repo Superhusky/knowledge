@@ -1,0 +1,54 @@
+1、mapper=> dao => daoImpl => service => Controller 写真实接口的顺序，一般将简单逻辑放置于Controller层，复杂逻辑放置于service层。
+
+2、常用基本类型之间的转换
+	=> long类型转其他整形类型数字后面加L eg:Long l = 12L;
+	=> String类型转int类型 int i = Integer.parseInt(String)
+	=> int/double/float/byte/short/long/boolean/Object 转String类型 String s = String.valueOf(,..,.,);
+	=> 基本数据类型都有相应的对象，那么相互之间转换 Integer/Short/Long/Double/Float等等的方法转换就好了
+	=> 范围较小的数据类型可以直接用在范围大的变量这边，大范围的变量要进行强制转换才可以在小范围变量处
+
+3、String date = String.format("%02d", userInfo.getBirthYear());
+	=> %02d  表示:在输出整数x的时候  按照2个位子的空间左对齐  多余的位子用0代替
+	输入3=> 03 常用于格式化输出部分数字
+	=> %02d 指的是输出格式
+	=> %表示先导标记
+	=> 0表示自动补全0
+	=> d表示整数
+
+4、在保存信息的接口中，性别如果是男(1) 那么可以直接保存，如果是女(0),那么就要先选择性别才能进行保存
+	将0作为判断条件，如果是0那么没有选择性别，且未0的时候是女性。所以造成这个问题=> 问题已经解决，修改containers下的Userinfo下的sex这边的数值就好了，但现在的问题是要刷一边数据库。不会刷
+
+5、如何截取字符串:birthdate.subString(0,4);从0开始截取到第四位的数字。
+
+6、写代码的时候，要保持代码的可读性，尽量少用嵌套。时间空间复杂度最好不要超过三个复杂度
+if(){
+	for(){
+		if(){
+
+		}
+	}
+}
+好傻逼的代码
+
+7、增删改查的过程中，尽量以主键这样的唯一标识来作为条件，以保证数据的正确性
+主键是唯一表示，反正不会错
+
+8、mybatis语句这边，当使用一个对象(实体)的时候，mybatis语句要进行标明:paramType="com.chuanyang100.entity.userInfo",作用就是表明
+where id=# {id,jdbcType=Integer} 时，这个id是userInfo下的id，不然会没有办法进行sql语句的运作
+
+9、在mybatis中写sql语句的时候要注意格式，可读性，后缀，
+
+10、myabits中可以用0，1，2，3这样的数字来表示入参不过这样可读性不好，常规的做法是在mapper层，用
+(param(value="password") String password)来表示，这样就可以就可以在入参较多的时候使用了password以名字来代表入参。
+
+11、select * from school_info  where region_id =25 order by convert(name USING gbk) COLLATE gbk_chinese_ci asc; 通过学校名称首字母按照降序排列。
+
+12、select
+        id,region_id,name,pinyin(name) AS pinyin //result 中不能有括号的colunm 用as来重新命名
+        from school_info
+        where region_id=
+        (select id from region_info
+        where province_id=#{provinceId,jdbcType=INTEGER}
+        and city_id=#{cityId,jdbcType=INTEGER})
+        order by convert(name USING gbk) COLLATE gbk_chinese_ci asc;
+        调用函数

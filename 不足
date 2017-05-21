@@ -1,0 +1,549 @@
+不足:
+1、数据库的基本操作不熟练,还有左右连接查询之类的有空看 
+left join inner join right join 
+2、对maven使用不熟,多使用
+3、对idea快捷键知道太少 
+4、对ssm框架用maven在idea上搭建不会 
+5、对于idea的基本配置只是了解,好多功能不熟悉
+6、肚子饿啊
+7、要是自己会写dos该多好啊 看着就好牛逼啊 
+8、css,js,json,jquery,reactjs等不熟练
+9、设计模式到底是什么意思呢
+我也不知道啊 
+10、貌似没有办法在idea上面新建一个junit测试文件......
+11、父类的引用可以指向具体的实现
+12、耦合度有什么用 日志代码入侵逻辑代码增加的耦合度,不方便系统维护
+耦合度越低那么维护起来越方便,强耦合度的情况下,当修改一个部分的时候那么和他上下关系的都要被修改,很烦
+13、idea中的junit不知道.......
+14、6月28号任务:完成maven下的ssm框架搭建 ..................完成啦
+
+15 One or more listeners failed to start. Full details will be found in the appropriate container log file  监听器没法启动是什么鬼
+
+16、问题出现在是idea中的maven不能编译xml文件
+  解决办法是:在pom.xml中配置:
+  <build>
+    <finalName>demo</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/java/</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+         <filtering>true</filtering>
+        <!--什么意思不懂哎,有什么用-->
+      </resource>
+    </resources>
+    <!--现在的问题是没有办法编译mapper中的文件-->
+  </build>
+
+17、6月28日下午任务:熟悉ssm框架和maven管理工具.熟悉ssm框架中的配置,xml等.通过debug调试,了解数据流向.
+
+18、6月29号搭建完整的node.js和redux等开发环境,至少熟悉相应的实例.
+
+19、到底怎么样才算是搭建好了react这边的环境......
+
+20、packjson文件夹可不可以公用？
+
+21、react提供了语法思想,不过具体的应用还是由node.js等框架写起来的
+
+22、如何在idea不重启tomcat的情况下,实时的更新网页
+
+23、junit测试在idea安装测试  => 两个问题
+
+24、最好定义局部变量,尽量定义在循环体外面.每次创建都会消耗内存
+
+25、try..catch少用
+
+26、弱引用 
+var
+
+27、springmvc是线程安全吗
+不是
+
+28、前端上传,http协议,
+
+29、事务到底是什么？spring中怎么处理事务
+
+30、mybatis框架好用的地方和不好用的地方 ==>移植性高,轻量级,小
+
+31、缓存的技术,mybatis的缓存是怎么做的
+sqlsession缓存:一次事物中相同sql第一次查询出来的会放在缓存中,第二次查询的时候就会直接从缓存中读取.一次会话,,一个SqlSession对象会使用一个Executor对象来完成会话操作,Executor对象会维护一个Cache缓存,以提高查询性能
+application缓存:如果用户配置了"cacheEnabled=true",那么MyBatis在为SqlSession对象创建Executor对象时,会对Executor对象加上一个装饰者:CachingExecutor,这时SqlSession使用CachingExecutor对象来完成操作请求.CachingExecutor对于查询请求,会先判断该查询请求在Application级别的二级缓存中是否有缓存结果,如果有查询结果,则直接返回缓存结果；如果缓存中没有,再交给真正的Executor对象来完成查询操作,之后CachingExecutor会将真正Executor返回的查询结果放置到缓存中,然后在返回给用户.
+大缓存是这样的,多个sqlsession会共用一个缓存,每次都会优先在这个缓存中读取数据,如果有那么好,直接获取,如果没有那么查询并且将数据放置到缓存中
+问题:如果有缓存的话,那么如果相同查询的sql 在不同时间进行查询那么查询出来的结果是不一样的,但是缓存放置的到底是啥
+mybatis缓存存放的:一级缓存缓存的是SQL语句,而二级缓存缓存的是结果对象
+说二级缓存不好的是什么鬼
+
+
+32、如何实现热加载 =>intellij在项目tomcat设置的窗口里,设置On frame deactivation =>Update classes and resourcees 热加载
+
+33、用servlet实现多个请求用一个方法来处理
+
+34、no是指第几个,不是总数的意思
+这个是命名的时候常用的
+
+35、写公司邮件注意格式和事项
+TO 孙超
+CC 李勇 吴珍珍
+
+附件接口文档说明书
+
+葛文杰 2016.7.7
+
+36、7月12号之前,提供首页假接口.
+
+37、运算符之间需要有空格,格式要求
+
+38、如果代码输写过程中出现波浪线,要求看下出了什么问题
+
+39、svn使用不正确
+
+40、邮件格式
+各位
+
+批阅接口文档以下接口有修改（红字标示).
+2.3.7 修改个人信息
+2.3.8 验证当前密码  删除
+2.3.9 修改当前密码
+2.5.1 开始批阅
+2.5.2 批阅
+
+没问题的话麻烦超哥给外包方转一下.
+
+
+李勇
+7/25
+
+
+41、idea中快捷操作
+      Alt+回车 导入包,自动修正
+      Ctrl+N   查找类
+      Ctrl+Shift+N 查找文件
+      Ctrl+Alt+L  格式化代码
+      Ctrl+Alt+O 优化导入的类和包
+      Alt+Insert 生成代码(如get,set方法,构造函数等)
+      Ctrl+E或者Alt+Shift+C  最近更改的代码
+      Ctrl+R 替换文本
+      Ctrl+F 查找文本
+      Ctrl+Shift+Space 自动补全代码
+      Ctrl+空格 代码提示
+      Ctrl+Alt+Space 类名或接口名提示
+      Ctrl+P 方法参数提示
+      Ctrl+Shift+Alt+N 查找类中的方法或变量
+      Alt+Shift+C 对比最近修改的代码
+
+      Shift+F6  重构-重命名
+      Ctrl+Shift+先上键
+      Ctrl+X 删除行
+      Ctrl+D 复制行
+      Ctrl+/ 或 Ctrl+Shift+/  注释（// 或者/*...*/ )
+      Ctrl+J  自动代码
+      Ctrl+E 最近打开的文件
+      Ctrl+H 显示类结构图
+      Ctrl+Q 显示注释文档
+      Alt+F1 查找代码所在位置
+      Alt+1 快速打开或隐藏工程面板
+      Ctrl+Alt+ left/right 返回至上次浏览的位置
+      Alt+ left/right 切换代码视图
+      Alt+ Up/Down 在方法间快速移动定位
+      Ctrl+Shift+Up/Down 代码向上/下移动.
+      F2 或Shift+F2 高亮错误或警告快速定位
+
+      代码标签输入完成后,按Tab,生成代码.
+      选中文本,按Ctrl+Shift+F7 ,高亮显示所有该文本,按Esc高亮消失.
+      Ctrl+W 选中代码,连续按会有其他效果
+      选中文本,按Alt+F3 ,逐个往下查找相同文本,并高亮显示.
+      Ctrl+Up/Down 光标跳转到第一行或最后一行下
+      Ctrl+B 快速打开光标处的类或方法
+
+42、@Transactional(readOnly=false) 可以对数据库更改数据 
+    @Transactional(readOnly=true) 不可以对数据库更改数据
+
+    insert update delete 的时候要设置Transactional(readOnly = false)
+
+43、mybatis中parameterType对应的是java的数据类型,不是数据库中的数据类型.
+
+44、对于数据类型最好做到前中后三层类型统一. 
+全是Integer 嘿嘿
+
+45、@lazy = true 默认的延迟加载 
+   @lazy = false 立即加载   spring
+
+46、document.onkeydown来对用户敲击键盘事件进行监听
+  1、onkeypress 这个事件在用户按下并放开任何字母数字键时发生.系统按钮（例如,箭头键和功能键)无法得到识别. 
+     onkeyup 这个事件在用户放开任何先前按下的键盘键时发生.
+     onkeydown 这个事件在用户按下任何键盘键（包括系统按钮,如箭头键和功能键)时发生.
+  2、trim()方法去除字符串左右两端的空格
+  3、document.onkeydown = function (e) 监听所有的事件
+
+47、清空数据库 truncate table
+
+48、date_format(tmp.done_date, '%Y%m%d') 日期格式化
+
+49、三目表达式:x?a:b
+
+50、双端队列的中常用见java api 
+见个鬼嘞 : 一个线性的collection,支持在两段插入和移除元素
+      抛出异常 特殊值 (队列前端)                抛出异常 特殊值(队列尾巴) 
+插入    addFirst(e) offerFirst(e)                 addLast(e) offerLast(e) 
+移除    removeFirst() pollFirst()                 removeLast() pollLast() 
+检查    getFirst() peekFirst()                    getLast() peekLast()
+      pollLast()与peekLast()之间的区别,
+        pollLast() 返回的是队列的最后一个元素,并且是直接移除,
+        peekLast() 返回的是队列的最后一个元素,并且不移除,并且没有的时候返回null值
+        getLast()  返回的是队列的最后一个元素,并且当为空的时候直接爆出异常
+      
+
+
+51、在程序中常量0,1 用global全局变量 声明
+
+52、boolean类型的属性,get/set方法中获取属性:isPrevExist()用这种方法,,,,,
+
+53、/**
+     * 用户待批阅试题组队列, 批阅每个页面显示一组试题
+     */
+    private Map<Long, Deque<NextQuestions>> questionGroupQueue = new ConcurrentHashMap<>();
+      以sessionID+taskId为组合组成long作为key ,将这一组试题以双端队列的形式存储起来
+      组的概念就是一个页面的上的所有题目,无论是一道题,还是两道题都称之为组.
+
+
+
+    /**
+     * 用户批阅过的试题缓存, 用于获取上一题
+     * key: 用户标识+"@"+任务ID
+     * val: 试题队列
+     */
+    private Map<String, Deque<NextQuestions>> userMarkedBuffer4Prev = new ConcurrentHashMap<>();
+      用户批阅过的试题放置于缓存池中,
+
+https://123.57.162.59/svn/R1118/trunk/SQL
+
+54、src="/static-V0.0.1/C:\Users\15207\Desktop\test\empty\img20160325_09100626.jpg"??
+
+
+55、使用缓存的时候,如果从数据库中取到的值为空,那么也要想map缓存中塞一个k-v键值对,即使value为空,这样的话,不用多次查询这个k所代表的值.
+如果value是空,那么下一次查询缓存的时候得到的值依然是空,那么还是会从数据库中查询数据,那么还是会浪费时间,
+
+56、对象申明属性的时候,最好进行设置值
+
+57、netstat -aon|findstr "8080"
+
+58、如果在循环终止之后不在需要循环变量的内容,for循环就优先于while循环
+
+59、没有必要在两个循环体中使用不同的变量名,循环是完全独立的,所以重用元素(或者是迭代器)变量的名称是不会有任何危害的,
+
+60、for比while好处还有就是更简短,更好的可读性
+
+61、对局部变量的作用域进行最小化的循环做法
+  for (int i = 0; n = getNum(); i < n; i ++) {
+    ...
+  }
+  有两个循环变量,两者具有完全相同的作用域,第二个变量n保存了i的极限值,从而避免了每次迭代中执行冗余计算的开销
+  通常如果涉及到方法调用,可以保证返回完全一样的结果
+
+62、for-each循环在简洁性和预防bug方面有着传统的for循环无法比拟的优势,并且没有性能损失
+    以下情况无法使用for-each循环
+
+    {
+      1、过滤:遍历集合并且要删除选定的元素,使用显示的迭代器,以便使用remove方法
+      
+      //显式的迭代器应该是 Iterator iterator = **.iterator();
+      2、转换:如果遍历列表或者数组,并且取代部分或者全部的数据,就需要列表迭代器或者数组索引,以便设定元素的值
+
+      3、平行迭代:如果需要并行的遍历多个集合,就需要显示的控制迭代器或者索引变量,以便所有的迭代器或者索引变量都可以得到同步前移
+
+      貌似都没怎么用过
+    }
+
+63、
+  {
+    1、使用bigDecimal的好处就是可以控制舍入模式,可以从8中方法中选取一种,并且位数超过18位的时候必须使用bigDecimal
+
+    2、选取long或者int代替float或者double的时候要记得处理十进制小数点 0.1 = 10 1 = 100
+
+    3、
+  }
+
+64、java的类型系统由两部分组成,包含八种基本类型和引用类型(String,list等),每个基本类型都有对应的引用类型,称作装箱基本类型,
+    1.5版本中增加了自动装箱和自动拆箱
+
+65、
+  区别:{
+          1、基本类型只有值,装箱基本类型有与它们值不同的同一性(引用的地址不同)
+
+          2、基本类型只有功能完备的值,装箱基本类型除了有基本类型的功能值之外,还有非功能值null
+
+          3、基本类型比装箱基本类型要更加节省空间和时间
+        }
+
+66、当在一项操作中混合使用基本类型和装箱基本类型的时候,装箱基本类型会自动拆箱
+    如果是null对象引用被自动拆箱,就会得到一个NullPointException
+    => 最好是单独使用
+
+67、变量被反复的拆箱和装箱很浪费系统资源
+
+68、使用装箱基本类型
+    {
+      1、作为集合中的元素,键和值
+
+      2、在泛型中,要使用装箱基本类型作为参数类型
+
+      3、在进行反射的方法调用  
+    }
+
+69、自动装箱的使用没有减少装箱基本类型的风险,仅减少了使用的繁琐程度
+
+70、不要使用字符串连接符来合并多个字符串,多使用StringBuilder的append方法
+
+71、连接n个字符串而重复使用字符串链接操作符,需要n的平方级时间 <= 因为字符串是不可变的,当两个字符串连接在一起的时候,两个字符串都要被拷贝
+
+72、java1.5版本已经加入非同步的StringBuilder,来取代过时的StringBuffer
+      {
+        1、String:字符串常量,是不可变的,速度最慢,且线程安全
+
+        2、StringBuilder:字符串变量,速度最快,线程不安全
+
+        3、StringBuffer:字符串变量,速度其次,线程安全
+            如果 z 引用一个当前内容是“start”的字符串缓冲区对象,则此方法调用 z.append("le") 会使字符串缓冲区包含“startle”,而 z.insert(4, "le") 将更改字符串缓冲区,使之包含“starlet”.
+            只要发生有关源序列（如在源序列中添加或插入)的操作,该类就只在执行此操作的字符串缓冲区上而不是在源上实现同步.
+            可将字符串缓冲区安全地用于多个线程.可以在必要时对这些方法进行同步,因此任意特定实例上的所有操作就好像是以串行顺序发生的,该顺序与所涉及的每个线程进行的方法调用顺序一致. => 线程安全
+      }
+
+72、java简单工厂模式
+{
+  工厂模式:属于类创建模式,工厂父类负责定义产品对象的公共接口,子类负责创建具体的产品对象.
+  目的:为了延迟对象的创建,在子类工厂完成创建,通过子类具体实例化某一个产品对象
+  包含:{
+          1、抽象产品:产品对象同一基类或者接口
+          2、子类产品:不同的实例对象类
+          3、抽象工厂:所有子类工厂类的基类,或是同一个接口
+          4、具体的工厂子类:负责不同的产品对象的实际创建
+        } 
+  eg:
+  //抽象产品
+    public interface Car {
+
+    /**
+     * 上班函数
+     */
+    void gotoWork();
+
+    }
+
+    //子类产品1
+    public class Bike implements Car {
+
+      @overreide
+      void gotoWork(){
+        System.out.println("自行车")
+      }
+    }
+
+    //子类产品2
+    public class Bus implements Car {
+
+      @overreide
+      void gotoWork(){
+        System.out.println("公交车")
+      }
+    }
+
+    //抽象工厂
+    public interface ICarFactory {
+        Car getCar()
+    }
+
+    //具体工厂方法1
+    public class BikeFactory implements ICarFactory {
+      @override
+      private Car getCar(){
+          return new Bike();
+      }
+    }
+
+    //具体工厂方法2
+    public class BusFactory implements ICarFactory {
+      @override
+      private Car getCar(){
+          return new Bus();
+      }
+    }
+
+}
+
+73、适配器模式: 把b中的方法放在a方法中用
+  {
+    1、类适配器模式:通过类的继承和实现来拓展接口,在一个适配器类中相互实现两个接口中的没有的方法,直接调用这个适配器的类,就可以使用两个接口中的所有方法
+       
+        原理:通过继承来实现适配器功能
+
+    2、对象适配器模式:在适配器P中定义私有变量C（对象)（B接口指向变量名),再定义一个带参数的构造器用来为对象C赋值,再在A接口的方法实现中使用对象C调用其来源于                   B接口的方法.
+
+        原理:通过组合来实现适配器功能.
+
+    3、接口适配器模式:当一个接口实现多个方法,但是我们使用的只是一部分方法,如果实现这个接口的话,那么要实现接口中的所有方法,所以可以通过抽象类的继承这个接口,并
+                        实现我们所需要用到的部分接口方法,其他方法放空,使用的时候就可以直接使用这个抽象类.
+
+        原理:通过抽象类的继承来实现适配
+  }
+
+74、适配器使用场景
+{
+  1、类/对象适配器使用场景
+      {
+        1、使用一个已存在的类,但是类不符合现有接口规范,导致无法直接访问,可以使用适配器
+
+        2、有一个类(要求被设计成可重用的类),创建适配器来适配其他没有提供合适接口的类
+      }
+
+  2、接口适配器使用场景:想要使用接口中的某个或某些方法,但是接口中有太多方法,我们要使用时必须实现接口并实现其中的所有方法,可以使用抽象类来实现接口,并不对方法进行实现（仅置空),然后我们再继承这个抽象类来通过重写想用的方法的方式来实现.这个抽象类就是适配器.
+}
+
+75、io流
+{
+  1、分类
+    {
+      1、数据流方向不同:输入流和输出流
+      2、数据单位不同:字符流和字节流
+      3、实现功能不同:节点流和处理流
+    }
+
+  2、字节流和字符流的区别:
+    {
+      字节流是读取8位二进制
+      字符流是读取16位二进制
+      两者的原理是相同的,但是处理的单位不同而已
+        {
+          字节流是:stream 为后缀的
+          字符流是:reader/writer:为后缀的
+        }
+    }
+
+  3、节点流是直接与数据源相连,读入和读出
+      直接使用节点流,读写不方便
+      处理流是在节点流的基础上套了一层,套接在节点流上的就是处理流
+
+  4、jdk四种流大致规划
+    {
+      1、字节流
+      {
+        1、节点流
+            {
+              1、FileInputStream //对文件操作
+              2、PipedInputStream //对管道进行操作
+              3、ByteArrayInputStream //在内存中开辟一个字节或者字符数组
+            }
+        2、处理流
+          {
+            1、BufferedInputStream //带缓存区的处理流,避免每次和磁盘打交道,提高数据访问效率
+            2、SequeneInputStream
+            3、DataInputStream //数据流可以直接输出float类型或long类型，提高了数据读写的效率。
+            4、ObjectInputStream
+          }
+      }
+      2、字符流
+        {
+          1、节点流
+            {
+              1、FileReader //对文件操作
+              2、PipedReader //对管道进行操作
+              3、CharArrayReader
+            }
+          2、处理流
+            {
+              1、InputStreamReader //转化流:可以把字节转化为字符
+              2、BufferedReader
+            }
+        }
+    }
+
+  5、PipedInputStream的一个实例要和2、PipedOutputStream一起使用,共同完成管道流的读写操作,主要用于线程操作
+    {
+      具体实例
+      //
+
+      import java.io.IOException;  
+      import java.io.PipedInputStream;  
+      import java.io.PipedOutputStream;  
+       
+      public class PipedInputStreamTest {  
+       
+         public static void main(String[] args) {  
+             //管道输出流  
+             PipedOutputStream out = new PipedOutputStream();  
+             //管道输入流  
+             PipedInputStream in = null;  
+             try {  
+                 //连接两个管道流。或者调用connect(Piped..);方法也可以  
+                 in = new PipedInputStream(out);    
+                 Thread read = new Thread(new Read(in));  
+                 Thread write = new Thread(new Write(out));  
+                 //启动线程  
+                 read.start();  
+                 write.start();  
+             } catch (IOException e) {  
+                 e.printStackTrace();  
+             }  
+         }  
+      }  
+       
+      class Write implements Runnable {  
+         PipedOutputStream pos = null;  
+       
+         public Write(PipedOutputStream pos) {  
+             this.pos = pos;  
+         }  
+       
+         public void run() {  
+             try {  
+                 System.out.println("程序将在3秒后写入数据，请稍等。。。");  
+                 Thread.sleep(3000);  
+                 pos.write("wangzhihong".getBytes());  
+                 pos.flush(); //当缓存未存满的时候调用,以保证数据不会丢失  
+             } catch (IOException e) {  
+                 e.printStackTrace();  
+             } catch (InterruptedException e) {  
+                 e.printStackTrace();  
+             } finally {  
+                 try {  
+                     if (pos != null) {  
+                         pos.close();  
+                     }  
+                 } catch (IOException e) {  
+                     e.printStackTrace();  
+                 }  
+             }  
+         }  
+      }  
+       
+      class Read implements Runnable {  
+         PipedInputStream pis = null;  
+       
+         public Read(PipedInputStream pis) {  
+             this.pis = pis;  
+         }  
+       
+         public void run() {  
+             byte[] buf = new byte[1024];  
+             try {  
+                 pis.read(buf);  
+                 System.out.println(new String(buf));  
+             } catch (IOException e) {  
+                 e.printStackTrace();  
+             } finally {  
+                 try {  
+                     if (pis != null) {  
+                         pis.close();  
+                     }  
+                 } catch (IOException e) {  
+                     e.printStackTrace();  
+                 }  
+             }  
+         }  
+      }
+    }
+
+  6、序列化流:对象序列化：把对象直接转换成二进制，写入介质中。
+      使用对象流需要实现Serializable接口,否则会报错.而若用transient关键字修饰成员变量,不写入该成员变量,若是引用类型的成员变量为null,值类型的成员变量为0.
+
+}

@@ -1,0 +1,25 @@
+app.properties : app所需要的元素
+
+urlSuffix : 请求后缀
+
+cookieName？
+
+web的请求路径是用web.view.prefix+controller层请求+web.view.suffix组成的
+
+<context:property-placeholder ignore-unresolvable="true" location="classpath*:/app.properties"/> 加载配置属性文件
+
+<bean id="springContextHolder" class="com.chuanyang100.common.SpringContextHolder" lazy-init="false"/>
+获取bean工具的诸注入
+	bean的用处和最基本的知识点
+
+BoneCP数据库连接池，一是不用synchronized来处理多线程对资源的争用，而是使用java.util.concurent包中的锁机制。
+二是使用连接池分区，每个分区独立管理，互不影响。
+init-method="init" 初始化的方法，destroy-method="close"销毁的方法
+
+加载配置文件<context></context>, 配置bean中的属性<property></property>
+
+
+
+
+
+

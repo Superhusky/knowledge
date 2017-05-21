@@ -1,0 +1,154 @@
+jquery
+
+
+$():是jquery()选择器的别称，能够返回所有匹配的dom元素数组的jquery对象
+$()将任何对象包裹成jquery对象，然后可以使用定义在jquery上的方法，甚至可以将一个选择器字符串传入进去，返回的是所有匹配的dom元素数组的jquery对象
+
+id选择器 class选择器 还有标签选择器 $("div") 能够返回带div标签的jquery对象。
+
+
+
+
+id选择器是通过id class选择器是通过css的class 
+$('#ada').val() 这个使用的是#
+$('.active').val() 这个使用的是.
+
+
+hide()/show()方法显示/隐藏
+$('#ad').click(function(){
+	$('#pic').hide();
+})
+
+$(document).ready()是什么函数，为什么要用它
+
+
+通过什么方法能够设置select的选择=>有待加强
+
+$([name='ada']:selectde);
+
+$('[name=ada]:selected')
+
+$('[name = aaaa]:selected');
+
+[name = aaaa]:selected ''里面放的是这个
+
+
+
+如何将一个html元素添加到dom树中
+用的是jquery appendTo(),在指定dom元素的末尾添加一个现存的元素或者一个新的html元素
+
+ 你能用 jQuery 代码选择所有在段落内部的超链接吗？（答案略）
+
+ var html = '<a>12312</a>';
+ $('ada').html(html);
+
+
+$(this) 和this的区别
+一个是对象 一个是元素
+
+
+
+$(this)是一个jquery对象，可以对他使用jquery方法text(),val()等，但是this只是指的是上下文中当前dom元素，你不能对其使用jquery方法，
+
+如何使用jquery来提取一个html标签的属性，
+$('#ada').attr('herf');
+
+$('a').each(function(){
+   $(this).attr('href');
+});
+
+你如何使用jQuery设置一个属性值? (答案)
+$('#ad').attr('name',value);name是属性名称，value是值
+
+
+jQuery中 detach() 和 remove() 方法的区别是什么? (答案)
+尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. 你也还可以看看 用来向DOM中添加元素的 appendTo() 方法.
+
+ 你如何利用jQuery来向一个元素中添加和移除CSS类? (答案)
+ removeClass()  addClass()
+
+
+jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?
+
+ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。
+
+$.get('adfa/ada/ad',{
+	
+},function(data,state){
+	
+})
+
+
+jQuery 中的方法链是什么？使用方法链有什么好处？
+
+方法链是对一个方法返回的结果调用另一个方法，这使得代码简洁明了，同时由于只对 DOM 进行了一轮查找，性能方面更加出色。
+
+
+
+你要是在一个 jQuery 事件处理程序里返回了 false 会怎样？
+因为在debug的时候，会发现state是succes才会接着走function里面的方法，如果是false那么就直接跳出
+面试给出来的答案是 阻止事件向上冒泡
+
+哪种方式更高效：document.getElementbyId("myId") 还是 $("#myId")？
+
+第一种，因为它直接调用了 JavaScript 引擎。
+
+$('#adaf')是封装了document.getElementbyId("ad")
+
+
+js
+
+js中如何体现了继承关系，prototype
+
+js中怎么样设置一个checkbox无效，怎么样选中一个checkbox
+document.all.cb[1].disabled = true
+
+
+input可以设置成disabled 和 readonly有什么区别
+readonly 可以被选中，可以获取焦点，可以被复制，但是不能被修改
+disabled 不能被选中，不能被修改，不能获取焦点，不能被复制
+
+js中三种常用的信息提示窗口 （警告窗口，确认窗口，信息输入窗口）
+alert 
+confirm
+prompt
+
+form中input有那些类型
+？
+
+javaScript中有那些变量
+全局变量，整个页面都有效
+局部变量，只在方法内有效果
+
+
+js中的主要的数据类型，和
+
+程序中捕获异常的方法
+try{}catch{}finally{}
+
+写出函数DateDemo的返回结果，系统时间假定为今天
+
+function DateDemo(){
+
+  var d, s="今天日期是：";
+
+  d = new Date();
+
+  s += d.getMonth() + "/";
+
+  s += d.getDate() + "/";
+
+  s += d.getYear();
+
+  return s;
+
+}
+
+function alert(){
+	var a;
+	alert(a);
+}
+ undefined
+
+ 超链接中target可以选择的 _blank,_parent,_self,_top
+

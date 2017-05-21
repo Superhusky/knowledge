@@ -1,0 +1,60 @@
+1、flux最大的特点就是:数据单向流动
+
+2、flux将应用分为四个部分:
+	view层: 视图层
+	action层: 动作，视图发出信息
+	Dispatch: 派发器，用于接收action、执行回调函数
+	store: 数据层，用于存放应用的状态，一旦发生改变，就提醒view更新页面
+
+3、运作流程
+	用户访问 View
+	View 发出用户的 Action
+	Dispatcher 收到 Action，要求 Store 进行相应的更新
+	Store 更新后，发出一个"change"事件
+	View 收到"change"事件后，更新页面
+
+4、Dispatcher 只能有一个，而且是全局的
+
+5、React的controller view模式，controller view 组件只是用来保存状态，然后将其转发给子组件。其最大的特点
+就是方便测试和复用，因为他只是一个纯组件，不包含任何状态
+
+6、每一个action都是一个对象，包含一个actionType属性(说明动作类型)和一些其他属性(用来传递数据)
+
+7、dispatch的作用就是把action派发到store，你可以把dispatch看作是一个路由器，负责view和store之间建立action正确的传递路线
+
+8、可能是很久很久之后，才会在某一天明白，当你喜欢一个人，只是那个人不喜欢你，虽然不如两个人互相喜欢，但比起你连一个不喜欢的人都没有，要幸运很多。
+
+9、其实module.exports才是真正的接口，exports只是它的一个辅助工具，最终调用的是module.exports
+	所有的exports收集到的属性和方法，都赋值给module.exports。当然这有个前提即module.exports不具备任何属性和方法，如果具有，那么exports收集的信息将被忽略
+
+10、store保存整个系统的状态
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						

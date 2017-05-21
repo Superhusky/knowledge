@@ -1,0 +1,118 @@
+多线程总结
+
+1、多线程的目的是为了更好的利用cpu
+
+2、多线程是指一个进程不止运行了一个线程
+换句话说就是一个进程运行了多个线程
+
+3、并行是指多个cup实例或者机器同时处理一段业务逻辑
+  并发是指多个程序在处理机上运行，但是任意一个时间点都只有一个程序在处理机上运行
+
+4、线程安全是指该代码经过多线程使用，线程调度顺序不影响最终结果，这个时候只要考虑cpu能否够用即可
+
+同步 通过人为的控制和调度，添加synchronized 保证线程安全，线程安全要高过性能
+
+进程和线程的区别
+进程可以看作一个程序或者一个应用，线程是属于进程的是cpu分配资源的最小调度单位
+
+多线程的好处是，最大效率的利用cpu，不让cpu空闲，多线程共享堆内存
+servlets 比cgi的好处是支持多线程
+
+如何创建一个线程，实现runnable接口，传递给Thread构造函数，创建一个thread对象
+
+或者继承thread类
+
+
+线程的生命周期 new runnable running dead ，wait block ，lock
+
+
+可以直接调用Thread类的run()方法么？
+
+当然可以，但是如果我们调用了Thread的run()方法，它的行为就会和普通的方法一样，为了在新的线程中执行我们的代码，必须使用Thread.start()方法。
+
+ 如何让正在运行的线程暂停一段时间？
+ sleep() ... 可以让线程暂时的休眠，但是不会放弃对象锁，等时间到了会再次变成runnable状态，然后等待分配资源，
+
+
+优先级的理解
+高优先级的线程运行时具有优先级，并且优先级通过1-10来区分1最低
+
+线程之间是否可以通信
+线程可以共享资源的时候，wait()/notify()/notifyAll()等方法可以用于线程通信资源之间锁的状态，并且由于java线程中并没有提供任何对象可以使用的锁和同步器，所以将这三个方法放到object类中，这样每一个类都有了线程之间通信的方法了
+
+如何确保线程安全，使用同步锁，使用voaltile关键字
+
+volatile关键字的作用:所有线程都会读取该变量，并且不会缓存他，这使得线程读取的变量是和内存中的是一致的
+
+什么是死锁
+指的是两个线程永远阻塞的情况，发生与两个线程和两个资源以上的
+
+线程池管理一组工作线程
+
+
+单利类
+懒汉
+
+好处多线程下运行安全，加载快
+坏处，用了锁所以运行速度较慢
+private class SingleTon(){
+	private SingleTon();
+	private static SingleTon instance;
+	private static SingleTon getInstance(){
+	 	if(instance == null){
+	 		instance = new SingleTon();
+	 	}
+	 	return instance
+	}
+}
+
+懒汉
+private class SingleTon(){
+	private SingleTon();
+	private static SingleTon instance;
+	private synchronized static SingleTon getInstance(){
+	 	if(instance == null){
+	 		instance = new SingleTon();
+	 	}
+	 	return instance
+	}
+}
+
+饿汉
+好处就是类初始化的时候就已创建对象，getInstance的时候没有同步方法，速度较快，运行速度快
+坏处就是加载的时候太慢，占用太大的内存空间
+private class SingleTon(){
+	private staitc SingleTon instance = new SingleTon();
+	private SingleTon(){}
+	private static SingleTon getInstance(){
+		return instance;
+	}
+}
+
+饿汉变种
+private class SingleTon(){
+	private SingleTon instance = null;
+	static {
+		instance = new SingleTon();
+	}
+	private SingleTon(){}
+	private staitc SingleTon getInstance(){
+		return instance;
+	}
+}
+
+双重校验
+public class SingleTon(){
+	private voaltile static SingleTon singleTon;
+	private SingleTon();
+	private static SingleTon getSingleTon(){
+		if(singleTon == null){
+			synchronized(Singleton.class){
+			if(singleTon == null){
+				singleTon = new SingleTon();、
+			}
+			}
+		}
+		return singleTon;
+	}
+}

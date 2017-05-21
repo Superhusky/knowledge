@@ -1,0 +1,909 @@
+1、使用length属性获取数组长度,public、private、protected、friendly区别
+public:公共
+private:私有
+protected:同一个包下可以访问
+friendly:用friendly修饰的类叫友好类,在另外一个类中使用友好类创建对象时,要保证它们在同一包中
+上面那个很不常用
+
+
+2、Collection和Collections区别 
+Collection:是一个接口集合,提供了对集合对象基本操作的通用接口方法,
+Collections:包含了各种有关集合操作的静态多态方法,不能实例化,服务于Collection框架
+
+
+3、String s=new String(‘xyz’);创建了几个object对象 
+两个一个是syz一个是s
+
+
+如果是String s = "xyz"，那就要看常量池里有没有"xyz"，如果有直接引用，如果没有则创建再引用
+
+4、short s1; s1=s1+1;是否有错？ // 推出这样一个结论 = > 就是说 相加后会以数据类型范围较大的那个为主 就是 s1 + 1 最后是int类型的
+
+s1 + = 1; 
+错
+
+
+5、Overriding和Overloading区别 
+都是多态的表现
+Overriding:重写父类方法,所有的东西都必须和父类保持一致(方法名,参数,顺序,返回值类型,)
+重写就是一切以父类为先觉条件，所有的东西都必须在父类的范围之下，子类不能重写final，private的父类方法，且抛出的异常也要在父类异常之下，且返回类型要一致
+OverloadIng:重载父类方法,方法名称不变,但是其他的都可以变(参数个数),关系是同一个方法名,同一个类,但是可以有不同的返回值.
+重载的话，那么参数必须不一样，其他可以一样可以不一样，
+
+对于重载来说，使用同一个方法命，通过输入不同的参数，便可以得到不同的返回值和功能，减小输入量和保持代码简洁。
+
+
+
+重载(Overload)
+重载(overloading) 是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。
+每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。
+只能重载构造函数
+
+
+重载规则
+被重载的方法必须改变参数列表(参数个数或类型或顺序不一样)；
+被重载的方法可以改变返回类型；
+被重载的方法可以改变访问修饰符；
+被重载的方法可以声明新的或更广的检查异常；
+方法能够在同一个类中或者在一个子类中被重载。
+
+
+无法以返回值类型作为重载函数的区分标准
+
+
+什么是构造函数
+
+=> 如果显示声明了类的构造函数，java就不会再生成默认的构造函数
+public class Animal{
+	public Animal（String name）{ //有参数的构造函数
+		this.name = name;
+	}
+
+	public Animal（）{
+
+	} //无参的构造函数
+}
+
+构造函数的名称要和类的名称一样，如果有多个类的时候， 要和主类的名称一致
+
+构造函数的意思就是类以一个什么样的方式生成
+
+特点：
+没有返回类型，也没有返回值
+
+构造函数不能被显式的调用
+
+在对象被创建的时候自动执行
+
+构造函数的名称与类同名
+
+作用
+默认的构造函数不能完成对象数据成员的初始化，只能给对象创造唯一表示，并且为对象的数据成员分配一定的内存空间
+
+
+public class dog(){
+	
+
+	private int  id ;
+	private String name; 
+}
+在类被声明的时候，按照定义好的基本数据类型为其分配好固定的内存空间
+所以这也就是int的字节长度
+
+1、给对象创建唯一标识
+2、 为对象分配内存空间
+3、完成对对象数据成员的初始化 
+
+
+
+方法的重写规则
+参数列表必须完全与被重写方法的相同；
+返回类型必须完全与被重写方法的返回类型相同；
+访问权限不能比父类中被重写的方法的访问权限更低。例如：如果父类的一个方法被声明为public，那么在子类中重写该方法就不能声明为protected。
+父类的成员方法只能被它的子类重写。
+声明为final的方法不能被重写。
+声明为static的方法不能被重写，但是能够被再次声明。
+子类和父类在同一个包中，那么子类可以重写父类所有方法，除了声明为private和final的方法。
+子类和父类不在同一个包中，那么子类只能够重写父类的声明为public和protected的非final方法。
+重写的方法能够抛出任何非强制异常，无论被重写的方法是否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则可以。
+构造方法不能被重写。
+如果不能继承一个方法，则不能重写这个方法。 => 首先要被继承才能被重写，final 和staitc修饰的不能被重写
+
+
+
+6、Set里面的元素不能重复,用什么方法区分重复与否. 
+set里的元素是不能重复的,用equals()方法来区分重复与否
+set是Collection容器的一个子接口,它不允许出现重复元素,当然也只允许有一个null对象.(重点)
+重点是只允许含有一个null
+
+set的特点
+有且仅有一个null值
+不能保持顺序
+值不能重复
+
+
+7、给出一个常见的runtime exception. 运行时异常
+
+NullPointException 控指针异常。
+IndexOutOfBorderException
+
+8、error和exception区别.
+error:不可修复的错误,需要人为的介入，gg
+exception:只是异常,程序还可以接着走下去 ，可以被抛出，不一定会影响程序，
+
+
+9、List和Set是否继承自Collection接口.
+是 
+
+
+10、abstract class和interface 的区别. 未
+相同点:
+不能被实例化
+接口和抽象方法内部的方法都要被实现
+
+不同点
+抽象类是通过继承，接口是通过implements实现
+接口要全部实现，不然会报错，抽象类中的方法可以选择性 的实现
+接口比抽象类还要抽象,只包含常量和方法，没有变量和方法的实现
+一个是is-a 一个是like-a
+一个类只能继承一个抽象类，但是可以实现多个接口
+
+
+
+3. interface的应用场合
+
+类与类之前需要特定的接口进行协调，而不在乎其如何实现。
+作为能够实现特定功能的标识存在，也可以是什么接口方法都没有的纯粹标识。
+需要将一组类视为单一的类，而调用者只通过接口来与这组类发生联系。
+需要实现特定的多项功能，而这些功能之间可能完全没有任何联系。
+4. abstract class的应用场合
+
+一句话，在既需要统一的接口，又需要实例变量或缺省的方法的情况下，就可以使用它。最常见的有：
+
+定义了一组接口，但又不想强迫每个实现类都必须实现所有的接口。可以用abstract class定义一组方法体，甚至可以是空方法体，然后由子类选择自己所感兴趣的方法来覆盖。
+某些场合下，只靠纯粹的接口不能满足类与类之间的协调，还必需类中表示状态的变量来区别不同的关系。abstract的中介作用可以很好地满足这一点。
+规范了一组相互协调的方法，其中一些方法是共同的，与状态无关的，可以共享的，无需子类分别实现；而另一些方法却需要各个子类根据自己特定的状态来实现特定的功能
+
+
+
+
+11、是否可以继承String类. 
+不可以
+
+
+12、try{}里有一个return语句,紧跟在try后的finally里的code会不会被执行,什么时候执行,return前执行还是return后执行.
+
+try {
+            Animal animal = null;
+            animal.test();
+
+            //当这边出现异常的时候，会直接跳到catch这个块中
+
+            System.out.println(1);
+            return;
+        }catch (Exception e){
+            System.out.println("111111111111");
+        }finally {
+            System.out.println("12321312");
+        }
+
+
+13、最有效率的方法算2*8等于几 
+2 << 3
+
+
+14、两个对象值相同,x.equal(y)==true,但是却可有不同的hashcode,这句话对不对.
+错的,equal比较的是两个对象是否相同,
+equals()比较的是两对象在内存的引用是否相同， == 比较的是两个值是否相同
+
+
+(未看)15、值传递和引用传递 
+引用传递:传递的参数是按引用进行传递,其实传递的引用的地址,也就是变量所对应的内存空间的地址.改变引用的地址而已
+值传递:就是递的参数是按值的拷贝传递.
+
+16、switch是否作用在byte、long、string上. 
+
+String s = "123";
+        switch (s){
+            case "123":
+                System.out.println(1);
+                break;
+            case "1231":
+                System.out.println(2);
+                break;
+            default:
+                System.out.println(3);
+                break;
+        }
+不能支持long
+支持除long以外的所有基本类型，还有泛型和String
+
+
+17、ArrayList和Vector区别,HashMap和Hashtable区别（了解这几个类的底层jdk中的编码方式）. 
+HashMap 和 HashTable:
+map:线程不安全,基于新的
+table:线程安全,基于老的
+ArrayList:线程不安全,新
+Vector:线程安全,老的
+ArrayList和Vector区别
+
+
+(未看)18、GC是什么,为什么要有GC,简单介绍GC. 
+垃圾回收
+防止内存溢出
+回收不用的对象，释放内存空间
+
+
+19、float f=3.4是否正确.
+错误 
+
+
+20、介绍Java中的Collection framework.(常用的三大集合)
+是java的集合框架,是java的基础.有四个接口:Collection,list,set,map
+list/set 继承Collection
+map自成一家
+
+
+
+
+21、Collection框架中实现比较方法 
+equals()
+
+
+22、String和Stringbuffer的区别
+String 一个是不能改变 速度最慢
+StringBuffer: 可以改变,线程安全速度最快 
+StringBulid: 同上,线程不安全,速度其次
+
+
+23、final、finally、finalize区别 
+fianl是关键字:表示不能够修改
+{
+	修饰对象，能改变值，但是不能改变引用
+	修饰方法，不能被重写，但是能被重载
+	修饰类，不能被继承
+	修饰变量，是常量，不能修改值
+}
+finally:必须执行的
+try catch中的
+
+finalize:垃圾回收专用
+。。。 不知道是干嘛的
+
+
+
+24、面向对象的特征 
+封装:
+给类的私有变量和方法添加访问权限，隐藏细节，
+
+
+
+多态:
+重写和重载
+
+
+
+继承:
+被继承类自动拥有继承类的所有属性，除了私有方法和final
+
+
+抽象:
+
+
+
+
+25、String是最基本的数据类型吗.
+不是 
+String 是一个对象，默认值是null
+
+
+26、运行时异常和一般异常的区别 
+runtime exception:运行时异常,这样的异常交由虚拟机处理,系统会吧异常一直往上抛,一直遇到处理代码,如果不对运行时异常处理,那么可以能会导致线程终止,或者主程序终止
+checked exception:一般异常,catch住,然后捕捉可能出现的异常
+
+runtime exception 包括空指针异常 (NullPointException),非法参数(IllegalArgumentException),算术异常(ArithmeticException)
+
+
+27、说出ArrayList、Vector、Linkedlist的存储性能和特性 
+ArrayList和Vector:底层用的是数组存储,所以插入的时候:当有新数据来的时候,那么新建一个然后将数据移动过去,所以插入效率较低,但是索引的时候较快
+Vector:由于被synchronied修饰,所以注重线程安全,所以较为安全,但是由于性能问题所有用的比较少,
+Linkedlist:双向链表,保存一种含有前后索引的对象的引用的对象的方式,所以在插入的时候修改几个有限的对象就行,但是在随机读取的时候,会比较慢,不过在按照顺序索引,前到后,或者后到前的时候速度还可以.
+
+
+28、heap和stack区别 
+heap是堆，用来保存new或者构造器声明的对象，分配内存速度较慢，但是有cg可以回收垃圾
+stack是栈，用来存放函数调用的现场，定义一个基本数据类型的变量，对象的引用，速度快，灵活
+静态区，存放一些常量和字面量
+
+
+29、Java中的异常处理机制的简单原理和应用 
+
+
+30、垃圾回收的原理和特点,并考虑2种回收机制 
+
+
+31、说出一些常用的 集合类和方法 
+list:list.get(),list.add,list.remove,list.size,
+map:map.put,map,get,遍历map
+
+
+list：size() get() add() remove() clera() toArray(Object)转化为数组 contains() equals()
+ 
+
+map常用的：put() get() remove() clera() isEmpty() containsKey() containsValue() size() 
+
+entrySet()遍历 values()获取所有值  keySet()获取所有key
+
+for (Map.Entry<Long, Integer> entry : testIdTotalMap.entrySet())
+entrySet其实就是把map转换成set然后用for循环遍历
+遍历map的key和value
+set用的少
+
+
+32、描述一下JVM加载Class文件的原理和机制
+
+
+
+33、排序的几种方法,了解.（算法和数据结构在面试的时候还没有被问到）
+冒泡
+
+
+
+快速
+
+
+
+希尔
+
+
+
+插入
+
+
+
+选择
+
+
+
+34、Java语言如何进行异常处理,throws,throw,try catch finally代表什么意义,try块中可以抛出异常吗
+throws:抛出一堆异常
+throw:抛出一个异常
+try:尝试
+catch:捕捉
+finally:必须执行的
+
+
+35、一个’.java’源文件是否可以包括多个类,有什么限制. 
+可以,但是文件名必须为主类
+
+
+36、Java中有几种类型流,jdk为每种类型的流提供了一些抽象类以供继承,请分别说出它们是哪些类.
+inputStream 字节输入流
+outputStream
+
+
+Reader 读写字符
+Writer
+
+
+
+37、Java中会存在内存泄漏吗,请简单描述. 
+会
+java内存发生泄露的情况如下,长生命周期的对象,持有了短生命周期的对象的引用,短生命周期的对象已经不在需要的时候,但是长生命周期的对象还持有他的引用,导致不能被回收
+什么叫持有它的引用
+引用传递
+值传递
+
+
+38、静态变量和实例变量的区别. 
+见40
+
+
+39、什么是Java序列化,如何实现java序列化. 
+
+
+
+
+40、是否可以从一个static方法内部发生对非static方法调用. 
+不能
+为什么？:静态方法在没有创建实例时就可以使用,而非静态方法一定要创建实例才会存在,所以在静态方法中调用非静态方法是不允许的,因为非静态方法在未实例化时是不存在的.
+
+实例变量和静态变量的区别
+实例变量必须先被声明才能被使用,静态变量可以直接使用
+实例变量是对象私有的,如果改变不会影响其他变量,类变量(静态变量)是所有对象所共有的,其中一个对象将他的值改变的话,那么其他对象引用他的时候得到的就是改变后的值.
+
+实例方法和静态方法的区别
+即实例方法是依附于类的,先申明类,或者声明对象才能被使用
+静态方法是通过类名直接访问,实例方法是通过类的实例访问
+
+
+41、写clone方法,通常都有一行代码.
+
+
+42、Java中如何跳出多重嵌套循环 
+break
+
+
+43、说出常用类、包、接口,各举5个.
+
+
+
+44、Java中实现线程的方法,用关键字修饰同步方法. 
+synchroized
+
+
+45、同步和异步区别.
+同步执行完这个步骤以后才能走下一个
+异步就是执行当前任务同时可以执行别的任务 
+
+
+46、线程同步的方法.
+synchronized 添加在方法开始段 
+
+
+47、字符串常用方法,字符串转化为整型数方法,整型数转化为字符串方法. 
+toString();
+Integer.parseInt();
+
+48、equals 和 == 区别
+1、==能判断基本类型是否相等，但是equals不能，equals只能比较基本类型的包装   => 两者的适用面不一样
+一个是针对基本类型，一个是针对类变量
+
+2、对于对象变量来说的话，==比较的是是否想等
+equals比较的是时候想同
+
+对于引用对象来说的话， == 比较的是引用的地址是否等
+
+equals单纯的比较的是
+
+
+
+public boolean equals(Object anObject) {
+        if (this == anObject) {
+            return true;
+        }
+        if (anObject instanceof String) { //instanceof的意思是 这个对象是否是 此种类型
+            String anotherString = (String) anObject;
+            int n = value.length;
+            if (n == anotherString.value.length) {
+                char v1[] = value;
+                char v2[] = anotherString.value;
+                int i = 0;
+                while (n-- != 0) {
+                    if (v1[i] != v2[i])
+                            return false;
+                    i++;
+                }
+                return true;  //比较每一个字符的值是否相等
+            }
+        }
+        return false;
+    }
+
+equals里面包含了==的用法
+
+二、Java高级 
+1、简述面向对象的理解,并举例说出你的理解.
+
+
+2、写出单例模式. 
+public class SingleTon(){ //懒汉+线程锁懒汉
+	private static SingleTon instance;
+
+	private SingleTon(){}
+
+	private synchronized static SingleTon getInstance(){ 
+		if(instance == null){
+			instance = new SingleTon();
+		}
+		return instance
+	}
+}
+
+public class SingleTon(){ //饿汉
+	private static SingleTon instance = new SingleTon;
+
+	private SingleTon(){}
+
+	private static SingleTon getInstance(){
+		return instance
+	}
+}
+
+//饿汉变种
+public  class SingleTon(){
+	private static SingleTon instance;
+	static {
+		instance = new SingleTon();
+	}
+
+	pirvate SingleTon();
+
+	private static SingleTon getInstance(){
+		return instance;
+	}
+}
+
+//双重校验
+public class SingleTon(){
+	private static SingleTon singleTon;
+
+	private SingleTon(){}
+
+	private static SingleTon getInstance(){
+		if (sinleTon == null) {
+			synchronized(SingleTon.class){
+			if(sinleTon == null){
+				singleTon = new SingleTon;
+			}
+			}
+		}
+		return singleTon;
+	}
+}
+
+
+3、写出一种11位手机号的正则表达式 
+^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$
+
+
+4、实现字符串多个空格转换一个空格 
+用replaceAll()
+
+
+5、字符串常用方法,substring(),split().,indexof(),
+subString(0,10);
+split(",",length);会自动补充
+
+
+6、start()和run()区别.
+1.start（）方法来启动线程,真正实现了多线程运行.这时无需等待run方法体代码执行完毕,可以直接继续执行下面的代码；通过调用Thread类的start()方法来启动一个线程, 这时此线程是处于就绪状态, 并没有运行. 然后通过此Thread类调用方法run()来完成其运行操作的, 这里方法run()称为线程体,它包含了要执行的这个线程的内容, Run方法运行结束, 此线程终止.然后CPU再调度其它线程.
+2.run（）方法当作普通方法的方式调用.程序还是要顺序执行,要等待run方法体执行完毕后,才可继续执行下面的代码； 程序中只有主线程——这一个线程, 其程序执行路径还是只有一条, 这样就没有达到写线程的目的.
+记住:多线程就是分时利用CPU,宏观上让所有线程一起执行 ,也叫并发 
+
+
+7、写出知道的设计模式. 
+da
+
+
+8、Webservice介绍.（这个我自己没用过,渣渣了） 
+
+
+9、说出Servlet生命周期,Servlet和CGI区别. 
+
+Servlet 初始化init()
+service(){
+	doGet()
+	doPost()
+}
+destroy()销毁
+
+cgi多线程
+
+servlet工作流程 是通过调用service响应客户请求，对请求进行匹配 选择 doget dopost方法处理请求，
+
+
+10、sleep和wait的区别. 
+
+sleep() 休眠状态，不放弃对象锁，时间到了会自动从locked状态变成runnable状态
+
+wait() 放弃对象锁，被synchronized修饰进入 waitBlocked池中，调用notify()/notifyAll()方法并放开同步锁进入runnable状态
+
+两个所属的类不一样，sleep是属于thread类的，wait是属于object类的
+
+唤醒的方式不一样，一个是时间到了自动唤醒，一个是被notify()
+
+
+
+11、什么是反射,如何实现. 
+通过对象找到类，可以调用类的私有属性，和方法
+反射 ： 程序能够访问，检测，修改它本身的状态和行为的一种能力
+
+实现方法
+
+
+forName
+.class
+getClass
+
+
+优点：简化代码，灵活
+缺点：复杂度增加，性能降低
+
+
+
+
+12、检查字符串回文,实现英文中单词个数和单词次数统计（部分公司要求较高,需要手动编程,百度查找一些面试常用编程题即可). 
+
+
+
+
+13、tcp/ip协议三次握手. 
+第一次握手:建立连接时,客户端A发送SYN包（SYN=j）到服务器B,并进入SYN_SEND状态,等待服务器B确认.
+
+第二次握手:服务器B收到SYN包,必须确认客户A的SYN（ACK=j+1）,同时自己也发送一个SYN包（SYN=k）,即SYN+ACK包,此时服务器B进入SYN_RECV状态.
+
+第三次握手:客户端A收到服务器B的SYN＋ACK包,向服务器B发送确认包ACK（ACK=k+1）,此包发送完毕,客户端A和服务器B进入ESTABLISHED状态,完成三次握手.
+
+14、http协议几种请求方式,区别. 
+post:
+安全，参数放在http请求内，数据量大
+
+get:数据量小，不安全，但是快捷，参数直接跟在url后面
+
+以&链接多个参数
+还有get方法是只支持ascll码的，要转码
+
+
+由于参数是跟在url后面的是，url长度有限制，数据会收到url长度限制
+
+并且由于参数跟在url后面的话，可能被缓存，能被其他人看到，不安全
+而post将参数放在请求的包体内
+
+
+
+15、Ajax请求是否可以实现同步.
+可以
+设置async:false,就可以了
+
+
+16、隐藏URL方式. 
+
+
+18、简述form表单提交post方法与get方法在字符编码、http协议方面的区别.
+post:使用HTTP的标准协议动词，用于编码和传送变量名/变量值对参数
+get:urlencode
+
+如果以get方式传输，所带参数附加在URL后直接传给server，并可从server端的QUERY_STRING这个环境变量中读取；如果以post方式传输，则参数会被打包在数据报中传送给server,并可从CONTENT_LENGTH这个环境变量中读取出来。
+
+
+
+
+19、一个http请求从开始到结束都经历了哪些过程,简写流程图. 
+
+
+20、事物的作用，怎么实现事物
+
+事物的作用就是控制数据的安全访问，解决数据安全访问 => 数据的安全
+
+事物是对数据库的一次访问，
+
+
+三、框架（只介绍自己熟悉） 
+1、spring中的事务管理,支持哪几种方式,以及每种方式具体方法.
+
+实现方式共有两种:编码方式；声明式事务管理方式.
+
+基于AOP技术实现的声明式事务管理,实质就是:在方法执行前后进行拦截,然后在目标方法开始之前创建并加入事务,执行完目标方法后根据执行情况提交或回滚事务.
+
+声明式事务管理又有两种方式:基于XML配置文件的方式；另一个是在业务方法上进行@Transactional注解,将事务规则应用到业务逻辑中.
+
+
+2、Spring常用注解. 
+@service
+@Autowired:可以对类成员的变量,方法,构造函数进行标注,完成自动装配的任务
+
+在接口上面家上，是的接口能狗被自动注入
+在属性上放置省略get/set方法
+
+
+@Resource:相当于Atuowired,一个是通过bytype,一个是通过byname(@Resource);
+如果既不指定 name 也不指定 type 属性,这时将通过反射机制使用 byName 自动注入策略.
+
+@Repository:标识访问数据库组件
+@controller：标识控制层组件
+@service:表示业务层组件，实现事物的
+@component：上面三个的总和...不确定的时候可以用这个来标识一下
+
+
+9、spring是什么. 
+轻量级应用程序(java)开发框架
+轻量:从大小和开销上都是轻量的,spring可以在1m的jar文件里面发布,spring是非侵入式的,spring中的对象不依赖与spring特定的类
+
+
+Spring框架来创建高性能,易于测试的,可重用的代码
+
+
+10、介绍IOC和AOP. 
+ioc依赖注入
+@Autowired
+spring是一个大的容器,里面有项目所有的实体类,mapper等,模块中需要什么,那么就分给你什么.
+能有效降低耦合性
+一个对象依赖的其他对象会通过被动的方式传递过来,而不是这个对象创建或者查找其他对象
+
+aop面向切面编程
+我的理解是:在编程中会出现,异常消息提示,可以通过切面把这个问题抛出,打印出来
+允许通过分离业务的系统级服务和业务逻辑,进行内聚性的开发
+
+
+11、springmvc工作原理. 
+
+springmvc的核心是dispatchservlet，
+
+浏览器发送请求到dispatchservlet，
+然后dispatchservlet查询一个或多个handlemapping，
+然后将请求传给对应的controller，
+并调用service处理，返回modelandview
+dispatchservlet查询一个或多个viewResoler，
+找到modelandview指定的视图，并返回
+
+
+12、Mybatis工作流程.
+
+1、  mybatis配置
+
+SqlMapConfig.xml，此文件作为mybatis的全局配置文件，配置了mybatis的运行环境等信息。
+
+mapper.xml文件即sql映射文件，文件中配置了操作数据库的sql语句。此文件需要在SqlMapConfig.xml中加载。
+
+2、  通过mybatis环境等配置信息构造SqlSessionFactory即会话工厂
+
+3、  由会话工厂创建sqlSession即会话，操作数据库需要通过sqlSession进行。
+
+4、  mybatis底层自定义了Executor执行器接口操作数据库，Executor接口有两个实现，一个是基本执行器、一个是缓存执行器。
+
+5、  Mapped Statement也是mybatis一个底层封装对象，它包装了mybatis配置信息及sql映射信息等。mapper.xml文件中一个sql对应一个Mapped Statement对象，sql的id即是Mapped statement的id。
+
+通过id获取sql
+
+6、  Mapped Statement对sql执行输入参数进行定义，包括HashMap、基本类型、pojo，Executor通过 Mapped Statement在执行sql前将输入的java对象映射至sql中，输入参数映射就是jdbc编程中对preparedStatement设置参数。
+
+
+用预处理的方式将在sql执行之前，将输入的java对象映射到sql中
+
+
+7、  Mapped Statement对sql执行输出结果进行定义，包括HashMap、基本类型、pojo，Executor通过 Mapped Statement在执行sql后将输出结果映射至java对象中，输出结果映射过程相当于jdbc编程中对结果的解析处理过程。
+
+sql执行之后，将查询的结果映射到java对象中
+
+
+
+
+13、Mybatis与Hibernate区别.
+没用过hibernate 
+
+
+14、Mybatis框架传递参数方式. 
+@Param
+
+
+15、简述Spring事务管理,使用什么设计模式实现. 
+原子性
+一致性
+隔离性
+永久性
+=> 设计模式:什么玩意
+单例模式
+简单工厂模式
+
+
+16、mvc框架
+m model：负责数据库中存储数据 模型，表示的业务规则(逻辑)
+v view：视图层
+c controller：控制层
+
+
+
+四、数据库 
+1、数据库里面的索引和约束是什么. => 索引的概念
+
+
+
+2、用SQL语句实现Oracle分页查询. 
+limit
+
+
+3、学生成绩表的常用查询（百度即可查到,常用的查询语法） 
+
+
+
+4、数据库性能优化常用基础知识,百万级数据优化（百度搜搜即可）. 
+1、少用！= <>
+2、少用null值作为查询条件
+3、多用索引
+4、用where 代替having
+5、用exists代替in
+
+
+5、left join ,right join用法.
+
+select * from user_info ui left join user_role ur on ur.user_id = ui.id;
+
+
+
+6、了解Redis,memcache,MongoDB等,最好有项目使用经验. 
+
+
+
+7、如何防止SQL注入.
+用预编译的方法 perparedStatement
+
+
+
+8、一个微博评论功能的数据库设计,部门表和员工表的设计,权限管理系统的数据库设计（数据库设计这个是一个重点,面试了几家公司都问到了,而且是重点）. 
+
+
+9、简述悲观锁和乐观锁. 
+
+
+1、JavaScript中怎样选中一个checkbox,设置它无效的方式.
+setAttribute("defaultChecked",true); 
+
+
+2、form表单 的input可以设置readonly和disable区别.
+readonly: 可以获取焦点,可以用tab键切换过去,可以获取文本内容
+disabled: 无法获取焦点,无法获取文本内容
+
+
+3、javascript变量范围有什么不同,全局变量和局部变量.
+全局变量:var 
+局部变量:let
+
+
+4、列举js3种数据类型.
+Undefined、Null、Boolean、Number、String和Object
+
+
+5、javascript常用对象 
+字符串、数值、数组、函数
+
+6、javascript中常用的取值赋值方法,对于单选按钮,复选框等的取值赋值等方法.（百度即可,javascript常用基础） 
+var errorId = $('#error-type input[name="errorType"]:checked').val();
+
+
+ $("input[type='radio']").removeAttr('checked');移除选中状态
+
+
+ $("input[name='errorType']").get(2).checked=true;添加选中状态
+
+
+7、jQuery取值赋值基本方法. 
+.val()
+
+8、获取单选按钮的值,获取复选框的值,获取下拉列表的值,后去复选框的值,获取单选按钮组的值,文本框、文本域赋值. (有问题)
+$('error-type input[name='errorType']:checked').val();
+
+
+9、jquery的append与appendTo区别. 
+append(content):把内容加到标签中
+appendTo:把所有符合条件的元素加到指定元素中
+
+
+10、CSS盒子模型的4个顺序. 
+content > padding > border > margin
+
+
+java序列化的作用就是
+序列化:将java对象转化为字节序列的过程,反序列化就是把字节序列恢复成java对象的过程
+
+当两个进程进行远程通信的时候，可以互相发送各种类型的数据，包括图片，文件，语音等这些数据都会以二进制序列的形式在网上传递，
+
+
+api
+
+java.io.ObjectOutPutStream 表示对象输出流，wirteObject(Object obj) 将java对象进行序列化，把得到的字节序列写到目标输出流中
+
+java.io.ObjectInPutStream 表示对象输入流，readObject读取字节序列，并将其反序列化为对象，将其返回
+
+只有实现了serializable 的接口的对象才能被序列化，否则会抛出异常
+
+ObjectOutputStream out = new ObjectOutputStream(new fileOutputStream(“D:\\objectfile.obj”));
+
+out.wirteObject("12312")
+out.wirteObject(new Date());
+
+
+ObjectInPutSteam in = new ObjectInputStream(ada);
+String s = (String)in.readObject("ada");
+Date obj2 = (Date)in.readObject();
+
+说明：为了正确读取数据，完成反序列化，必须保证向对象输出流写对象的顺序与从对象输入流中读对象的顺序一致。
+
+
+1）Java序列化就是把对象转换成字节序列，而Java反序列化就是把字节序列还原成Java对象。
+
+2）采用Java序列化与反序列化技术，一是可以实现数据的持久化，在MVC模式中很是有用；二是可以对象数据的远程通信。
+
+
+
+mybatis 

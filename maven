@@ -1,0 +1,13 @@
+1、modelVersion：
+	POM 模型版本 4.0.0 固定 
+	groupId：一般指某个公司或者某个组织的某个项目 比如 org.springframework 
+	artifactId:一般指某个具体项目的某个具体模块 比如 spring-context 
+	Version：项目的版本 
+2、Maven 常见命令 
+	Mvn compile 编译 
+	Mvn clean 清空 
+	Mvn test 测试 
+	Mvn package 打包 
+	Mvn install 把项目安装到本地仓库 
+	Mvn 远程仓库地址：http://mvnrepository.com/
+3、maven项目的文件夹基本格式：D:\HelloWorld\src\main\java\com\helloWorld   好烦啊 

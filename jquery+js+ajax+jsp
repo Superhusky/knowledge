@@ -1,0 +1,8 @@
+1、<c:forEach items="${regionInfoList}" var="pro">
+                            <div class="item" data-value="${pro.provinceId}">${pro.provinceName}</div>
+   </c:forEach> jsp 中的标签 foreach 
+
+2、在页面用只有带有提交属性的标签，能够赋值。例如 ：text ，button等 
+		<input id="subject-popup" name="subject-popup"  value="' + subjectId + '" type="hidden"/>';  hidden 可以 隐性的赋值 在 页面上 隐藏
+
+3、

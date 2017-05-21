@@ -1,0 +1,70 @@
+1、Action 有两个作用
+	:用Action来分辨具体的执行动作。比如是create 还是delete？或者是update？
+	:操作数据首先得有数据。比如添加数据得有数据，删除数据得有ID。。action就是存这些数据的地方。
+		详细：
+			Action 是一个普通对象。
+			redux约定 Action 内使用一个字符串类型的 type 字段来表示将要执行的动作。
+			除了 type 之外，Action可以存放一些其他的想要操作的数据
+
+2、reducer
+	:Action就像leader，告诉我们应该做哪些事，并且给我们提供‘资源（就是上面说的数据）’，真正干活的是苦逼的Reducer。。
+		详细：
+			Reducer 是一个普通的回调函数。
+			当它被Redux调用的时候会为他传递两个参数State 和 Action。
+			Reducer会根据 Action 的type来对旧的 State 进行操作。返回新的State。
+		注意:
+			不要修改 state。
+			在 default 情况下返回旧的 state。遇到未知的 action 时，一定要返回旧的 state。
+			如果没有旧的State，就返回一个initialState，这很重要！！！
+
+
+3、store
+	:一个应用只有一个Store。一个应用只有一个Store。一个应用只有一个Store。重要的事情放在前面说，而且说三遍。。
+	:维持应用的 state；
+	:提供 getState() 方法获取 state；
+	:提供 dispatch(action) 方法更新 state；
+	:通过 subscribe(listener) 注册监听器。
+	:Store提供了一些方法。让我们很方便的操作数据。
+	:我们不用关心Reducer和Action是怎么关联在一起的，Store已经帮我们做了这些事。。
+		方法:
+			getState： 获取应用当前State。
+			subscribe：添加一个变化监听器。
+			dispatch：分发 action。修改State。=>常用的是dispatch，这是修改State的唯一途径，
+			replaceReducer：替换 store 当前用来处理 state 的 reducer。
+
+4、React-Redux
+	:Redux 是独立的，它与React没有任何关系。React-Redux是官方提供的一个库，用来结合redux和react的模块。
+	:React-Redux提供了两个接口Provider、connect。
+
+5、Provider
+	:Provider是一个React组件，它的作用是保存store给子组件中的connect使用。
+	:通过getChildContext方法把store保存到context里。
+	:后面connect中会通过context读取store。		
+
+6、connect
+	:connect 会把State和dispatch转换成props传递给子组件。它看起来是下面这样的
+		import * as actionCreators from './actionCreators'
+		import { bindActionCreators } from 'redux'
+		function mapStateToProps(state) {
+		  return { todos: state.todos }
+		}
+		function mapDispatchToProps(dispatch) {
+		  return { actions: bindActionCreators(actionCreators, dispatch) }
+		}
+		export default connect(mapStateToProps, mapDispatchToProps)(Component)
+
+7、mapStateToProps：
+	:mapStateToProps 是一个普通的函数。
+	:当它被connect调用的时候会为它传递一个参数State。
+	:mapStateToProps需要负责的事情就是返回需要传递给子组件的State.然后connect会拿到返回的数据写入到react组件中，然后组件中就可以通过props读取数据啦~~~~
+	:function mapStateToProps(state) {
+  		return { list: state.list }
+	}
+
+8、mapDispatchToProps：
+	:与mapStateToProps很像，mapDispatchToProps也是一个普通的函数.
+	:当它被connect调用的时候会为它传递一个参数dispatch。
+	:mapDispatchToProps负责返回一个 dispatchProps
+	:dispatchProps 是actionCreator的key和dispatch(action)的组合。
+	:把actionCreator变成方法赋值到props，每当调用这个方法，就会更新State
+

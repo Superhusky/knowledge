@@ -1,0 +1,20 @@
+1、把xml等配置文件放在resources资源文件夹中。
+
+2、dao包中放置调用数据库接口和接口实现类 mybatis的接口
+
+3、entity包中放置项目中的对象
+
+4、uitls包中放置项目所需要的工具类
+
+5、web/controller中放置springmvc的@Controller
+
+6、service包中放的都是服务层，自动写入相应的dao，然后处理传过来的数据
+
+7、interceptor放的都是各种拦截器，不知道拦截器有什么用啊
+
+8、security放的都是各种捕捉异常的类
+
+9、service是怎么用的
+
+
+

@@ -1,0 +1,113 @@
+接口总结
+1、接口中涉及到数组格式的json用此名字的复数作为名称:tasks 任务数组
+
+2、post请求是同application/json作为参数MIME类型
+
+3、对每一个字段起名的时候要注意使用驼峰起名的方式:currentPassword
+
+4、假接口中给出的数据尽量符合逻辑，并且能演示多种情况。
+
+5、java中起名的话要以驼峰的形式进行。
+
+6、for循环中声明对象表示:每一次循环都会重新声明对象，防止循环的时候被覆盖了前面的数据。
+for(int i = 0 ; i < 10 ; i ++ ){
+    User user = new User();
+    ....
+    ....
+    ....
+    userList.add(user);
+    这样添加进去的数据才不会被刷成同样的
+}
+
+7、springmvc中常用的注解:@RequestMapping("/")接受请求的,
+                       @ResposneBody(不知道怎么用),简单的来说就是将查询到的数据通过http请求并且放在body区域中响应回去。
+                       @RequestParam(value = "markYM", required = true) String markYM,springmvc中的标准传参用法
+
+8、获取时间用Calender :Calender cal=Calender.getInstance();
+Date date = new Date()
+date.getTime();获取当前时间。
+
+9、 //任何一个入参都有用的地方
+	int year = Integer.parseInt(markYM.substring(0, 4));//获取markym中的前面四位并将其赋值给year
+	int mon = Integer.parseInt(markYM.substring(4, 6)); //获取markym中的第五六位，将其赋值给mon
+	Calendar cal = Calendar.getInstance();
+	cal.set(Calendar.YEAR, year);
+	cal.set(Calendar.MONTH, mon - 1);
+	cal.set(Calendar.DAY_OF_MONTH, 29); //每次递减29吗？这个是什么意思？
+    substring(0,4);给一个字符串截取，从第0个开始，截取到第四个。
+
+10、赋值的时候可以通过for循环，然后从预先定义数组中
+		String[] questionType = {"作文", "短文改错", "填空题", "解答题"};
+		for (int i = 1; i <= pageSize; i++) {
+			detailMarking.setQuestionTypeName(questionType[j]);
+		}
+
+11、public Notices getNotices() { //因为要返回的不只是一条公告，所以要用复数(并不是这样的，傻逼)
+        Notices notices = new Notices();
+        List<Notice> list = new ArrayList<>();//声明一个集合，然后集合中存储的是公告的信息
+        Notice notice;
+        for (int i = 0; i < 5; i++) {
+            notice = new Notice();//没进行一次for循环那么就要声明一个新的对象，不然即使存到list集合里面了，前面的数据也会被覆盖
+            notice.setNoticeTitle("公告A" + i);
+            notice.setNoticeUrl("/static/test/notice.html");
+            list.add(notice);
+        }
+        notices.setNotices(list);
+        return notices;
+    }
+
+12、
+
+13、程序中代码是按序执行的，有可能放在前面只是一个强制性的赋值之类的功能
+
+14、province.setName(String.valueOf((char) i));当i=65的时候，那么设置出去的name就是A，强制转换i，用ASCLL码
+    通过i的变化，来获取相应的ASCLL码
+
+15、Calender类一个抽象类,它为特定瞬间与一组诸如年月日等日历字段之间提供了一些方法，瞬间可以用毫秒值来判断，它是距
+1970.1.1.00.00的毫秒值。
+
+16、与其他语言环境敏感类一样，Calender有一个getInstance方法，已获得一个通用对象。getInstance返回的是一个Calender对象，
+其日历字段已有当前日期和时间初始化。
+
+17、Calender具有宽松性，有两种模式:lenient和non-lenient。当处于lenient时候那么它可接受比它生成日历范围更大范围内的值。当Calender
+重新计算日历字段值，以便由get()方法返回，所有日历字段都被标准化。
+
+18、set(f,value)方法:将f的值设置为value，它设置了一个内部成员变量，以指示日历字段已经被改变，尽管日历字段已经被改变，但是直到下次get()
+getTime()等被调用时才会重新计算日历的时间值。因此多次调用set不会触发多次不必要的计算。
+示例：假定 GregorianCalendar 最初被设置为 1999 年 8 月 31 日。调用 set(Calendar.MONTH, Calendar.SEPTEMBER) 将该日期设置为 1999 年 9 月 31 日。如果随后调用 getTime()，那么这是解析 1999 年 10 月 1 日的一个暂时内部表示。但是，在调用 getTime() 之前调用 set(Calendar.DAY_OF_MONTH, 30) 会将该日期设置为 1999 年 9 月 30 日，因为在调用 set() 之后没有发生重新计算。
+
+19、add(f, delta) 将 delta 添加到 f 字段中。这等同于调用 set(f, get(f) + delta)，但要带以下两个调整：
+
+Add 规则 1。调用后 f 字段的值减去调用前 f 字段的值等于 delta，以字段 f 中发生的任何溢出为模。溢出发生在字段值超出其范围时，结果，下一个更大的字段会递增或递减，并将字段值调整回其范围内。
+
+Add 规则 2。如果期望某一个更小的字段是不变的，但让它等于以前的值是不可能的，因为在字段 f 发生更改之后，或者在出现其他约束之后，比如时区偏移量发生更改，它的最大值和最小值也在发生更改，然后它的值被调整为尽量接近于所期望的值。更小的字段表示一个更小的时间单元。HOUR 是一个比 DAY_OF_MONTH 小的字段。对于不期望是不变字段的更小字段，无需进行任何调整。日历系统会确定期望不变的那些字段。
+
+20、roll(f, delta) 将 delta 添加到 f 字段中，但不更改更大的字段。这等同于调用 add(f, delta)，但要带以下调整：
+
+Roll 规则。在完成调用后，更大的字段无变化。更大的字段表示一个更大的时间单元。DAY_OF_MONTH 是一个比 HOUR 大的字段。
+
+21、abstract  void add(int field, int amount) 根据日历的规则，为给定的日历字段添加或减去指定的时间量。 
+
+
+{"result":0,"errMsg":null,"collections":[
+{"subjectId":1,"subjectName":"数学","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":2,"subjectName":"语文","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":2,"questionTypeName":"作文"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":3,"subjectName":"英语","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":2,"questionTypeName":"作文"},{"questionTypeId":3,"questionTypeName":"短文改错"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":4,"subjectName":"物理","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":5,"subjectName":"化学","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":6,"subjectName":"生物","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":7,"subjectName":"历史","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":8,"subjectName":"政治","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]},
+
+{"subjectId":9,"subjectName":"地理","questionTypes":[{"questionTypeId":1,"questionTypeName":"填空题"},{"questionTypeId":4,"questionTypeName":"解答题"}]}]}
+
+http://localhost:8080/mark/collection-questions?subjectId=1&questionTypeId=1&pageNo=1&pageSize=8&order=2&tagId=1
+
+7月20号，为什么删掉@Override和revert是相同的效果
