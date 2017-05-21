@@ -68,3 +68,16 @@
 25、git 不会推送tag(标签),除非使用 git push  --tag
 
 26、q键表示查询
+
+27、删除分支的步骤
+	{
+		1、git branch -d test
+		2、git push -r -d origin/test //删除远程主机上的
+		3、git push --delete test 
+	}
+
+28、新建分支
+	{
+		1、git branch test //创建本地分支
+		2、git push origin test //创建远程主机分支
+	}
